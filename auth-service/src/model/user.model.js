@@ -23,14 +23,7 @@ export default (serviceName) => ({
       type: "enum", //input type
       values: ["driver", "policeman", "accountant", "admin"],
     },
-    // {
-    //   name: "transactionId",
-    //   type: "foreign",
-    //   target: {
-    //     service: "bank",
-    //     model: "transactions",
-    //   },
-    // },
+
   ],
   actions: [
     {
