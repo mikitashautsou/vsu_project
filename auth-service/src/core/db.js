@@ -1,5 +1,4 @@
-const MongoClient = require("mongodb").MongoClient;
-const { Db } = require("mongodb");
+import { Db, MongoClient } from "mongodb";
 
 const url = "mongodb://localhost:27017/";
 let mongoClient;
@@ -21,13 +20,10 @@ const init = async () => {
  * @param {string} dbName
  * @returns {Promise<Db>}
  */
-const connectToDB = async (dbName) => {
+export const connectToDB = async (dbName) => {
   if (!mongoClient) {
     await init();
   }
   return mongoClient.db(dbName);
 };
 
-module.exports = {
-  connectToDB,
-};

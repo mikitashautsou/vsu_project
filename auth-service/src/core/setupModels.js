@@ -1,7 +1,7 @@
-const { createCRUDRoutes } = require("./createCRUDRoutes");
-const { connectToDB } = require("./db");
+import { createCRUDRoutes } from "./createCRUDRoutes.js";
+import { connectToDB } from "./db.js";
 
-const setupModels = (app, models) => {
+export const setupModels = (app, models) => {
   for (const model of models) {
     app.use(`/${model.systemName}`, createCRUDRoutes(model));
   }
@@ -20,8 +20,4 @@ const setupModels = (app, models) => {
       models,
     });
   });
-};
-
-module.exports = {
-  setupModels,
 };

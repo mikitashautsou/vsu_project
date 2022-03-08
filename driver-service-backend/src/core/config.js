@@ -1,6 +1,4 @@
 module.exports = {
   JWT_SECRET: "2022",
-  SERVICE_MAPPING: {
-    drivers: "http://localhost:4000",
-  },
+  COORDINATOR_SERVICE_URL: "http://localhost:4000",
 };
