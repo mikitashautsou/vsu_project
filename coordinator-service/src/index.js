@@ -17,7 +17,7 @@ const getServiceStatuses = async () => {
     services.map(async ([service, { protocol, port, domain }]) => {
       let serviceUp = false;
       let dbUp = false;
-      const url = `${protocol}://${domain}:${port}/describe-yourself`;
+      let url = `${protocol}://${domain}:${port}/describe-yourself`;
       try {
         const { status } = await fetch(url).then((res) => res.json());
         dbUp = status.dbAccess === "ok";
@@ -26,6 +26,7 @@ const getServiceStatuses = async () => {
         console.log(`Error occurred while connecting to ${url}`);
       }
       return {
+        port,
         service,
         up: serviceUp,
         db: dbUp,
@@ -42,14 +43,18 @@ app.get("/explore", async (req, res) => {
 });
 
 app.listen(config.PORT, () => {
-  console.log(`Example app listening on port ${config.PORT}`);
+  console.log(chalk.green.bold(`Coordinator service started on ${config.PORT}`));
 });
 
 getServiceStatuses().then((statuses) => {
   for (const status of statuses) {
     if (status.up) {
       if (status.db) {
-        console.log(chalk.green.bold(`${status.service} service is OK`));
+        console.log(
+          chalk.green.bold(
+            `${status.service} service is OK, and listening on the port ${status.port}`
+          )
+        );
       } else {
         console.log(
           chalk.yellow.bold(

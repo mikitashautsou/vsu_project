@@ -5,13 +5,14 @@ let mongoClient;
 
 const init = async () => {
   try {
+
     console.log("connecting to db");
 
     mongoClient = new MongoClient(url);
     mongoClient = await mongoClient.connect();
   } catch (err) {
     console.log(err);
-    throw err
+    throw err;
   }
 };
 
@@ -26,4 +27,3 @@ export const connectToDB = async (dbName) => {
   }
   return mongoClient.db(dbName);
 };
-
