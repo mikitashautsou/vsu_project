@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "44b11705-2e3f-4866-937f-0f6305a6829a",
+		"name": "Bank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"passportNumber\": \"1234\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"username\": \"m.shautsou\",\n    \"password\": \"test\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/auth/sign-up",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"auth",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sign in",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/auth/sign-in",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"auth",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMmU5NTNmNDYyZWY5MmVjY2JlYzQiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MyIsInBhc3N3b3JkIjoidGVzdCIsImFjY291bnRJZCI6IjM0NDQ2OTYyMiIsInJvbGUiOiJhZG1pbiIsImJhbGFuY2UiOjUsImlhdCI6MTY0NzE5NDEyNH0.Lt8nO7twMYifLZtry6xP5OIxQrQboUvOljIOFkQu_7g",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMmU5NTNmNDYyZWY5MmVjY2JlYzQiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MyIsInBhc3N3b3JkIjoidGVzdCIsImFjY291bnRJZCI6IjM0NDQ2OTYyMiIsInJvbGUiOiJhZG1pbiIsImJhbGFuY2UiOjUsImlhdCI6MTY0NzE5NDEyNH0.Lt8nO7twMYifLZtry6xP5OIxQrQboUvOljIOFkQu_7g",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/users/420319909",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"users",
+						"420319909"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMmU5NTNmNDYyZWY5MmVjY2JlYzQiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MyIsInBhc3N3b3JkIjoidGVzdCIsImFjY291bnRJZCI6IjM0NDQ2OTYyMiIsInJvbGUiOiJhZG1pbiIsImJhbGFuY2UiOjUsImlhdCI6MTY0NzE5NDEyNH0.Lt8nO7twMYifLZtry6xP5OIxQrQboUvOljIOFkQu_7g",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\": \"updated name\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/users/344469622",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"users",
+						"344469622"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:4000/users/344469622",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"users",
+						"344469622"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transactions",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMjU1ZTY3Y2YzMzk5Y2RjZDRiYWMiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MiIsInBhc3N3b3JkIjoidGVzdCIsInJvbGUiOiJyZWd1bGFyIiwiaWF0IjoxNjQ3MTkxMzk0fQ.J6yRQIMbsIH8Czwz6TxPPGqHxx6JTJKi-grVxEBiax0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get transaction",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMjU1ZTY3Y2YzMzk5Y2RjZDRiYWMiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MiIsInBhc3N3b3JkIjoidGVzdCIsInJvbGUiOiJyZWd1bGFyIiwiaWF0IjoxNjQ3MTkxMzk0fQ.J6yRQIMbsIH8Czwz6TxPPGqHxx6JTJKi-grVxEBiax0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/transactions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transactions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMmU5NTNmNDYyZWY5MmVjY2JlYzQiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MyIsInBhc3N3b3JkIjoidGVzdCIsImFjY291bnRJZCI6IjM0NDQ2OTYyMiIsInJvbGUiOiJyZWd1bGFyIiwiYmFsYW5jZSI6MCwiaWF0IjoxNjQ3MTkzNzYxfQ.tc4-KX5olWPFWfArcZCv83491yHDNgeJygVo0EKPwGw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fromAccountId\": \"344469622\",\n    \"toAccountId\": \"420319909\",\n    \"amount\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjJlMmU5NTNmNDYyZWY5MmVjY2JlYzQiLCJwYXNzcG9ydE51bWJlciI6IjEyMzQiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwidXNlcm5hbWUiOiJtLnNoYXV0c291MyIsInBhc3N3b3JkIjoidGVzdCIsImFjY291bnRJZCI6IjM0NDQ2OTYyMiIsInJvbGUiOiJyZWd1bGFyIiwiYmFsYW5jZSI6MCwiaWF0IjoxNjQ3MTkzNzYxfQ.tc4-KX5olWPFWfArcZCv83491yHDNgeJygVo0EKPwGw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"accountId\": \"344469622\",\n    \"amount\": 100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Transfer Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": null
+			},
+			"response": []
+		},
+		{
+			"name": "Complete request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/completeRequest",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"completeRequest"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
