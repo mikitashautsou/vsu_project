@@ -1,35 +1,33 @@
 import { Db, MongoClient } from "mongodb";
+import { DB_HOST, DB_NAME } from "../config/config.js";
 
-const url = "mongodb://127.0.0.1:27017/";
 let mongoClient;
 
 const init = async () => {
   try {
-
+    mongoClient = new MongoClient(DB_HOST);
     console.log("connecting to db");
-
-    mongoClient = new MongoClient(url);
     mongoClient = await mongoClient.connect();
+    console.log("Connected to DB");
   } catch (err) {
-    console.log(err);
+    console.error(err);
     throw err;
   }
 };
 
 /**
  *
- * @param {string} dbName
  * @returns {Promise<Db>}
  */
-export const connectToDB = async (dbName) => {
+export const connectToDB = async () => {
   if (!mongoClient) {
     await init();
   }
-  return mongoClient.db(dbName);
+  return mongoClient.db(DB_NAME);
 };
 
 /**
- * 
+ *
  * @returns {MongoClient}
  */
-export const getMongoClient = () => mongoClient
+export const getMongoClient = () => mongoClient;

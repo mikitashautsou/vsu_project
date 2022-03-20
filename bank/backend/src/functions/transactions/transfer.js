@@ -1,9 +1,9 @@
-import { connectToDB, getMongoClient } from "../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../config/config.js";
+import { connectToDB, getMongoClient } from "../../common/db.js";
+import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
-import { decodeJWT } from "../common/jwt.js";
+import { decodeJWT } from "../../common/jwt.js";
 import { ObjectId } from "mongodb";
-import { generateRandomNumber } from "../common/num.js";
+import { generateRandomNumber } from "../../common/num.js";
 
 /**
  * @param {import("express").Request} req
@@ -45,6 +45,7 @@ export default async (req, res) => {
       });
       return;
     }
+
     const destinationAccount = await bankDb.collection("users").findOne({
       accountId: toAccountId,
     });
@@ -89,6 +90,7 @@ export default async (req, res) => {
       amount,
       date: new Date(),
       initiator: `${sourceAccount.firstName} ${sourceAccount.lastName}`,
+      status: 'completed'
     });
     res.json({
       status: "ok",

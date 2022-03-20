@@ -1,7 +1,7 @@
-import { connectToDB } from "../common/db.js";
-import { DB_NAME } from "../config/config.js";
-import { generateRandomNumber } from "../common/num.js";
-import { decodeJWT } from "../common/jwt.js";
+import { connectToDB } from "../../common/db.js";
+import { DB_NAME } from "../../config/config.js";
+import { generateRandomNumber } from "../../common/num.js";
+import { decodeJWT } from "../../common/jwt.js";
 
 /**
  * @param {import("express").Request} req

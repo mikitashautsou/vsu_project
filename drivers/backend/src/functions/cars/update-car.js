@@ -5,6 +5,7 @@ import { decodeJWT } from "../common/jwt.js";
 
 /**
  * @param {import("express").Request} req
+ * @param {import("express").Response} res
  */
 export default async (req, res) => {
   try {
@@ -21,30 +22,30 @@ export default async (req, res) => {
       return;
     }
     const result = decodeJWT(headers.authorization);
-    const { _id, role, accountId: selfAccountId } = result;
-    const bankDb = await connectToDB(DB_NAME);
+    const { _id, role } = result;
+    const bankDb = await connectToDB();
 
-    if (
-      accountId !== selfAccountId &&
-      role !== "accountant" &&
-      role !== "admin"
-    ) {
-      res.json({
-        status: "error",
-        message: "Access denied",
-      });
-      return;
-    }
+    // if (role !== "accountant" && role !== "admin") {
+    //   res.json({
+    //     status: "error",
+    //     message: "Access denied",
+    //   });
+    //   return;
+    // }
 
-    const { password, ...sanitizedUser } = await bankDb
-      .collection("users")
-      .findOne({
+    await bankDb.collection("users").updateOne(
+      {
         accountId,
-      });
+      },
+      {
+        $set: {
+          ...body,
+        },
+      }
+    );
 
     res.json({
       status: "ok",
-      body: sanitizedUser,
     });
   } catch (e) {
     res.json({ status: "error", message: e.message });

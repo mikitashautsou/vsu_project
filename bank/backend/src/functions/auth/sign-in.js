@@ -1,6 +1,7 @@
-import { connectToDB } from "../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../config/config.js";
+import { connectToDB } from "../../common/db.js";
+import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
+import { generateRandomNumber } from "../../common/num.js";
 
 /**
  * @param {import("express").Request} req
@@ -32,7 +33,7 @@ const validateBody = (req, res, body) => {
   if (!body.accountId) {
     res.json({
       status: "error",
-      message: "Account id was not specified",
+      message: "accountId was not specified",
     });
     return false;
   }

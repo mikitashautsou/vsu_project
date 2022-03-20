@@ -1,9 +1,9 @@
-import { connectToDB, getMongoClient } from "../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../config/config.js";
+import { connectToDB, getMongoClient } from "../../common/db.js";
+import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
-import { decodeJWT } from "../common/jwt.js";
+import { decodeJWT } from "../../common/jwt.js";
 import { ObjectId } from "mongodb";
-import { generateRandomNumber } from "../common/num.js";
+import { generateRandomNumber } from "../../common/num.js";
 
 /**
  * @param {import("express").Request} req
@@ -16,13 +16,16 @@ export default async (req, res) => {
       return;
     }
 
-    const { accountId, amount } = body;
-    const result = decodeJWT(headers.authorization);
-    const { _id, role } = result;
+    const { toAccountId, amount } = body;
+    const { _id, role, accountId } = decodeJWT(headers.authorization);
     const bankDb = await connectToDB(DB_NAME);
 
     let transactions;
-    if (role !== "accountant" && role !== "admin") {
+    if (
+      role !== "accountant" &&
+      role !== "admin" &&
+      toAccountId !== accountId
+    ) {
       res.json({
         status: "error",
         message: "Access denied",
@@ -30,7 +33,7 @@ export default async (req, res) => {
       return;
     }
     const destinationAccount = await bankDb.collection("users").findOne({
-      accountId,
+      accountId: toAccountId,
     });
 
     if (!destinationAccount) {
@@ -41,21 +44,20 @@ export default async (req, res) => {
       return;
     }
 
-    destinationAccount.balance += amount;
-
-    await bankDb.collection("users").updateOne(
-      {
-        _id: destinationAccount._id,
-      },
-      {
-        $set: {
-          balance: destinationAccount.balance,
-        },
-      }
-    );
+    const transactionNumber = generateRandomNumber();
+    await bankDb.collection("transactions").insertOne({
+      transactionNumber,
+      fromAccountId: undefined,
+      toAccountId,
+      amount,
+      date: undefined,
+      initiator: undefined,
+      status: "requested",
+    });
     res.json({
       status: "ok",
-      message: "Funds deposited",
+      message: "Transaction requested",
+      transactionNumber,
     });
   } catch (e) {
     res.json({ status: "error", message: e.message });
@@ -63,7 +65,7 @@ export default async (req, res) => {
 };
 
 const validateBody = (req, res, body) => {
-  if (!body.accountId) {
+  if (!body.toAccountId) {
     res.json({
       status: "error",
       message: "Destination account id was not specified",

@@ -1,6 +1,6 @@
-import { connectToDB } from "../common/db.js";
-import { DB_NAME } from "../config/config.js";
-import { generateRandomNumber } from "../common/num.js";
+import { connectToDB } from "../../common/db.js";
+import { DB_NAME } from "../../config/config.js";
+import { generateRandomNumber } from "../../common/num.js";
 
 /**
  * @param {import("express").Request} req
@@ -12,23 +12,19 @@ export default async (req, res) => {
     return;
   }
   const newUser = body;
-  const db = await connectToDB(DB_NAME);
-  const accountId = generateRandomNumber();
+  const db = await connectToDB();
   db.collection("users").insertOne({
     ...newUser,
-    accountId,
-    role: "regular",
-    balance: 0,
+    role: "driver",
   });
   res.json({
     status: "ok",
     message: "User was created",
-    accountId,
   });
 };
 
 const validateBody = (req, res, body) => {
-  if (!body.passportNumber) {
+  if (!body.passportNo) {
     res.json({
       status: "error",
       message: "Passport number was not specified",
@@ -53,6 +49,13 @@ const validateBody = (req, res, body) => {
     res.json({
       status: "error",
       message: "Password was not specified",
+    });
+    return false;
+  }
+  if (!body.bankAccountId) {
+    res.json({
+      status: "error",
+      message: "Bank account id was not specified",
     });
     return false;
   }

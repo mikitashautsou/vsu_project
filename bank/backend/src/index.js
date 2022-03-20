@@ -1,17 +1,19 @@
 import express from "express";
 import cors from "cors";
-import signUp from "./functions/sign-up.js";
-import signIn from "./functions/sign-in.js";
-import createAccount from "./functions/create-user.js";
-import getTransactions from "./functions/get-transactions.js";
-import getUsers from "./functions/get-users.js";
-import transfer from "./functions/transfer.js";
-import updateUser from "./functions/update-user.js";
-import deleteUser from "./functions/delete-user.js";
-import getUser from "./functions/get-user.js";
-import createUser from "./functions/create-user.js";
-import getTransaction from "./functions/get-transaction.js";
-import deposit from "./functions/deposit.js";
+import signUp from "./functions/auth/sign-up.js";
+import signIn from "./functions/auth/sign-in.js";
+import createAccount from "./functions/users/create-user.js";
+import getTransactions from "./functions/transactions/get-transactions.js";
+import getUsers from "./functions/users/get-users.js";
+import transfer from "./functions/transactions/transfer.js";
+import updateUser from "./functions/users/update-user.js";
+import deleteUser from "./functions/users/delete-user.js";
+import getUser from "./functions/users/get-user.js";
+import createUser from "./functions/users/create-user.js";
+import getTransaction from "./functions/transactions/get-transaction.js";
+import deposit from "./functions/transactions/deposit.js";
+import createRequest from "./functions/transactions/create-request.js";
+import completeRequest from "./functions/transactions/complete-request.js";
 
 const app = express();
 
@@ -20,6 +22,10 @@ app.use(cors());
 
 app.get("/transactions/:transactionNumber", getTransaction);
 app.get("/transactions", getTransactions);
+app.post("/transfer", transfer);
+app.post("/deposit", deposit);
+app.post("/request", createRequest);
+app.post("/completeRequest", completeRequest);
 
 app.post("/users", createUser);
 app.get("/users", getUsers);
@@ -29,8 +35,6 @@ app.delete("/users/:accountId", deleteUser);
 
 app.post("/auth/sign-up", signUp);
 app.post("/auth/sign-in", signIn);
-app.post("/transfer", transfer);
-app.post("/deposit", deposit);
 
 app.listen(4000, () => {
   console.log(`Example app listening on port ${4000}`);

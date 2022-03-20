@@ -1,14 +1,25 @@
-import { connectToDB } from "../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../config/config.js";
+import { connectToDB } from "../../common/db.js";
+import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
-import { decodeJWT } from "../common/jwt.js";
+import { decodeJWT } from "../../common/jwt.js";
 
 /**
  * @param {import("express").Request} req
  */
 export default async (req, res) => {
   try {
-    const { headers } = req;
+    const {
+      headers,
+      body,
+      params: { accountId },
+    } = req;
+    if (!accountId) {
+      res.json({
+        status: "error",
+        message: "Account not found",
+      });
+      return;
+    }
     const result = decodeJWT(headers.authorization);
     const { _id, role } = result;
     const bankDb = await connectToDB(DB_NAME);
@@ -21,11 +32,19 @@ export default async (req, res) => {
       return;
     }
 
-    const users = await bankDb.collection("users").find().toArray();
+    await bankDb.collection("users").updateOne(
+      {
+        accountId,
+      },
+      {
+        $set: {
+          ...body,
+        },
+      }
+    );
 
     res.json({
       status: "ok",
-      body: users,
     });
   } catch (e) {
     res.json({ status: "error", message: e.message });

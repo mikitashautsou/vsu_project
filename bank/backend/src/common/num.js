@@ -1,1 +1,4 @@
-export const generateRandomNumber = () => (Math.random() * 1000000000).toFixed(0);
+
+import { uuid } from 'uuidv4';
+
+export const generateRandomNumber = () => uuid().replace(/-/g, '').toUpperCase()

@@ -1,7 +1,7 @@
-import { connectToDB } from "../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../config/config.js";
+import { connectToDB } from "../../common/db.js";
+import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
-import { decodeJWT } from "../common/jwt.js";
+import { decodeJWT } from "../../common/jwt.js";
 
 /**
  * @param {import("express").Request} req
@@ -21,10 +21,14 @@ export default async (req, res) => {
       return;
     }
     const result = decodeJWT(headers.authorization);
-    const { _id, role } = result;
+    const { _id, role, accountId: selfAccountId } = result;
     const bankDb = await connectToDB(DB_NAME);
 
-    if (role !== "accountant" && role !== "admin") {
+    if (
+      accountId !== selfAccountId &&
+      role !== "accountant" &&
+      role !== "admin"
+    ) {
       res.json({
         status: "error",
         message: "Access denied",
@@ -32,19 +36,15 @@ export default async (req, res) => {
       return;
     }
 
-    await bankDb.collection("users").updateOne(
-      {
+    const { password, ...sanitizedUser } = await bankDb
+      .collection("users")
+      .findOne({
         accountId,
-      },
-      {
-        $set: {
-          ...body,
-        },
-      }
-    );
+      });
 
     res.json({
       status: "ok",
+      body: sanitizedUser,
     });
   } catch (e) {
     res.json({ status: "error", message: e.message });
