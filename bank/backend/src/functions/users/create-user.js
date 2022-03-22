@@ -9,7 +9,7 @@ import { decodeJWT } from "../../common/jwt.js";
 export default async (req, res) => {
   const { headers } = req;
   const { role } = decodeJWT(headers.authorization);
-  if (role !== "accountant" && role !== "admin") {
+  if (role !== "admin") {
     res.json({
       status: "error",
       message: "Access denied",

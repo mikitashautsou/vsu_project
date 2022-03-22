@@ -13,7 +13,7 @@ export default async (req, res) => {
     const { _id, role } = result;
     const bankDb = await connectToDB(DB_NAME);
 
-    if (role !== "accountant" && role !== "admin") {
+    if (role !== "admin") {
       res.json({
         status: "error",
         message: "Access denied",

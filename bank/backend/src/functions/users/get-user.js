@@ -26,7 +26,6 @@ export default async (req, res) => {
 
     if (
       accountId !== selfAccountId &&
-      role !== "accountant" &&
       role !== "admin"
     ) {
       res.json({
