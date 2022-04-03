@@ -19,10 +19,11 @@ export default async (req, res) => {
     password,
   });
   if (!user) {
-    return {
+    res.json({
       status: "error",
       message: "Invalid username or password",
-    };
+    });
+    return;
   }
   const token = await createJWT(user);
   const { password: _, ...sanitizedUser } = user;
