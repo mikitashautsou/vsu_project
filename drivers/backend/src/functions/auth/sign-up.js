@@ -25,35 +25,35 @@ export default async (req, res) => {
 
 const validateBody = (req, res, body) => {
   if (!body.passportNo) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Passport number was not specified",
     });
     return false;
   }
   if (!body.firstName) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "First name was not specified",
     });
     return false;
   }
   if (!body.lastName) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Last name was not specified",
     });
     return false;
   }
   if (!body.password) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Password was not specified",
     });
     return false;
   }
   if (!body.bankAccountId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Bank account id was not specified",
     });

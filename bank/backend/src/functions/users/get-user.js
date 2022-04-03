@@ -14,7 +14,7 @@ export default async (req, res) => {
       params: { accountId },
     } = req;
     if (!accountId) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Account not found",
       });
@@ -24,11 +24,8 @@ export default async (req, res) => {
     const { _id, role, accountId: selfAccountId } = result;
     const bankDb = await connectToDB(DB_NAME);
 
-    if (
-      accountId !== selfAccountId &&
-      role !== "admin"
-    ) {
-      res.json({
+    if (accountId !== selfAccountId && role !== "admin") {
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -46,6 +43,6 @@ export default async (req, res) => {
       body: sanitizedUser,
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };

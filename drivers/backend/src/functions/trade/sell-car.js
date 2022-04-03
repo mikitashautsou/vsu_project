@@ -28,7 +28,7 @@ export default async (req, res) => {
       carNo,
     });
     if (userId !== car.ownerId && ["admin", "policeman"].includes(role)) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -40,7 +40,7 @@ export default async (req, res) => {
       state: SALE_STATE.NEW,
       price,
       saleTransactionNo: undefined,
-      ownerId: userId
+      ownerId: userId,
     });
 
     res.json({
@@ -48,7 +48,7 @@ export default async (req, res) => {
       message: "Sale position was created",
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

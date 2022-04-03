@@ -27,7 +27,7 @@ export default async (req, res) => {
       role !== "admin" &&
       fromAccountId !== accountId
     ) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -39,7 +39,7 @@ export default async (req, res) => {
     });
 
     if (sourceAccount.balance < amount) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Not enough founds",
       });
@@ -51,7 +51,7 @@ export default async (req, res) => {
     });
 
     if (!destinationAccount) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Destination account not found",
       });
@@ -90,34 +90,34 @@ export default async (req, res) => {
       amount,
       date: new Date(),
       initiator: `${sourceAccount.firstName} ${sourceAccount.lastName}`,
-      status: 'completed'
+      status: "completed",
     });
     res.json({
       status: "ok",
       message: "Funds transferred",
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };
 
 const validateBody = (req, res, body) => {
   if (!body.fromAccountId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Source account id was not specified",
     });
     return false;
   }
   if (!body.toAccountId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Destination account id was not specified",
     });
     return false;
   }
   if (!body.amount) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Amount was not specified",
     });

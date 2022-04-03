@@ -10,7 +10,7 @@ export default async (req, res) => {
   const { headers } = req;
   const { role } = decodeJWT(headers.authorization);
   if (role !== "admin") {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Access denied",
     });
@@ -38,42 +38,42 @@ export default async (req, res) => {
 
 const validateBody = (req, res, body) => {
   if (!body.passportNumber) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Passport number was not specified",
     });
     return false;
   }
   if (!body.firstName) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "First name was not specified",
     });
     return false;
   }
   if (!body.lastName) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Last name was not specified",
     });
     return false;
   }
   if (!body.password) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Password was not specified",
     });
     return false;
   }
   if (!body.balance) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Balance was not specified",
     });
     return false;
   }
   if (!body.role) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Role was not specified",
     });

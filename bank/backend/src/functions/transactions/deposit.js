@@ -23,7 +23,7 @@ export default async (req, res) => {
 
     let transactions;
     if (role !== "accountant" && role !== "admin") {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -34,7 +34,7 @@ export default async (req, res) => {
     });
 
     if (!destinationAccount) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Destination account not found",
       });
@@ -58,20 +58,20 @@ export default async (req, res) => {
       message: "Funds deposited",
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };
 
 const validateBody = (req, res, body) => {
   if (!body.accountId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Destination account id was not specified",
     });
     return false;
   }
   if (!body.amount) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Amount was not specified",
     });

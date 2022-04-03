@@ -9,7 +9,7 @@ export const validateBody = (req, res, body, requiredFields) => {
     (rf) => body[rf] === undefined
   );
   if (unsetRequiredField) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: `${unsetRequiredField} was not provided`,
     });

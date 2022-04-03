@@ -14,7 +14,7 @@ export default async (req, res) => {
     const bankDb = await connectToDB(DB_NAME);
 
     if (role !== "admin") {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -28,6 +28,6 @@ export default async (req, res) => {
       body: users,
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };

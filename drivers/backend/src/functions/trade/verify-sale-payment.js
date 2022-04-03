@@ -20,7 +20,7 @@ export default async (req, res) => {
 
     const { saleId } = req.params;
     if (!saleId) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Sale id was not provided",
       });
@@ -32,7 +32,7 @@ export default async (req, res) => {
     });
 
     if (!sale) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Sale was not found",
       });
@@ -40,7 +40,7 @@ export default async (req, res) => {
     }
 
     if (!sale.saleTransactionNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Sale payment was not requested yet",
       });
@@ -51,7 +51,7 @@ export default async (req, res) => {
       _id: new ObjectId(sale.ownerId),
     });
     const {
-      body: { status,  },
+      body: { status },
     } = await fetch(
       `${BANK_SERVICE_URL}/transactions/${sale.saleTransactionNo}`,
       {
@@ -60,10 +60,10 @@ export default async (req, res) => {
           Authorization: DRIVER_SERVICE_BANK_TOKEN,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => res.status(400).json());
 
     if (status !== "completed") {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Sale payment was not paid yet",
       });
@@ -81,7 +81,7 @@ export default async (req, res) => {
         toAccountId: owner.bankAccountId,
         amount: sale.price,
       }),
-    }).then((res) => res.json());
+    }).then((res) => res.status(400).json());
 
     await db.collection("sales").updateOne(
       {
@@ -94,21 +94,21 @@ export default async (req, res) => {
       }
     );
     await db.collection("cars").updateOne(
-        {
-          carNo: sale.carNo,
+      {
+        carNo: sale.carNo,
+      },
+      {
+        $set: {
+          ownerId: sale.newPotentialOwner,
         },
-        {
-          $set: {
-            ownerId: sale.newPotentialOwner,
-          },
-        }
-      );
+      }
+    );
     res.json({
       status: "ok",
       message: "Payment verified",
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

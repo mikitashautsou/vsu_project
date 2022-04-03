@@ -11,14 +11,14 @@ export default async (req, res) => {
   try {
     const { carNo, poaId } = req.params;
     if (!carNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car no was not provided",
       });
       return;
     }
     if (!poaId) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "POA Id no was not provided",
       });
@@ -28,14 +28,19 @@ export default async (req, res) => {
     const db = await connectToDB();
     let poa = await db.collection("poa").findOne({ _id: new ObjectId(poaId) });
     if (!poa) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "POA not found",
       });
       return;
     }
-    if (poa.fromUserId !== _id && poa.targetUserId !== _id && role !== "admin" && role !== "policeman") {
-      res.json({
+    if (
+      poa.fromUserId !== _id &&
+      poa.targetUserId !== _id &&
+      role !== "admin" &&
+      role !== "policeman"
+    ) {
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -46,7 +51,7 @@ export default async (req, res) => {
       body: poa,
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

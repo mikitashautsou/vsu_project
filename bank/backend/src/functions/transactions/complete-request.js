@@ -27,7 +27,7 @@ export default async (req, res) => {
       role !== "admin" &&
       fromAccountId !== accountId
     ) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -39,7 +39,7 @@ export default async (req, res) => {
       status: "requested",
     });
     if (!requestModel) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Transfer request not found",
       });
@@ -49,7 +49,7 @@ export default async (req, res) => {
     });
 
     if (sourceAccount.balance < requestModel.amount) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Not enough founds",
       });
@@ -61,7 +61,7 @@ export default async (req, res) => {
     });
 
     if (!destinationAccount) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Destination account not found",
       });
@@ -110,20 +110,20 @@ export default async (req, res) => {
       message: "Transfer request completed",
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };
 
 const validateBody = (req, res, body) => {
   if (!body.fromAccountId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Source account id was not specified",
     });
     return false;
   }
   if (!body.transferRequestNo) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "transferRequestNo account id was not specified",
     });

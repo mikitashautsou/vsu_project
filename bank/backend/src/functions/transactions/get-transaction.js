@@ -23,7 +23,7 @@ export default async (req, res) => {
       transaction.toAccountId !== accountId &&
       (role === "accountant" || role === "admin")
     ) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "access denied",
       });
@@ -34,6 +34,6 @@ export default async (req, res) => {
       body: transaction,
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };

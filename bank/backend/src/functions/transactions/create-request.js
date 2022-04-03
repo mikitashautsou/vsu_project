@@ -26,7 +26,7 @@ export default async (req, res) => {
       role !== "admin" &&
       toAccountId !== accountId
     ) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -37,7 +37,7 @@ export default async (req, res) => {
     });
 
     if (!destinationAccount) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Destination account not found",
       });
@@ -60,20 +60,20 @@ export default async (req, res) => {
       transactionNumber,
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };
 
 const validateBody = (req, res, body) => {
   if (!body.toAccountId) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Destination account id was not specified",
     });
     return false;
   }
   if (!body.amount) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Amount was not specified",
     });

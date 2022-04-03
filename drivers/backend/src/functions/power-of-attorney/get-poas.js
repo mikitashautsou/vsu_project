@@ -10,7 +10,7 @@ export default async (req, res) => {
   try {
     const { carNo } = req.params;
     if (!carNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car no was not provided",
       });
@@ -42,7 +42,7 @@ export default async (req, res) => {
       body: poas,
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

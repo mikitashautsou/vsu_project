@@ -37,6 +37,6 @@ export default async (req, res) => {
       body: transactions,
     });
   } catch (e) {
-    res.json({ status: "error", message: e.message });
+    res.status(400).json({ status: "error", message: e.message });
   }
 };

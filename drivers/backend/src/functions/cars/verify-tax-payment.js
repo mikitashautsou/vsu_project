@@ -19,7 +19,7 @@ export default async (req, res) => {
 
     const { carNo } = req.params;
     if (!carNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car no was not provided",
       });
@@ -31,7 +31,7 @@ export default async (req, res) => {
     });
 
     if (!car) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car was not found",
       });
@@ -39,14 +39,14 @@ export default async (req, res) => {
     }
 
     if (car.ownerId !== _id && !["admin", "policeman"].includes(role)) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
       return;
     }
     if (!car.taxPaymentTransactionNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Tax payment was not requested yet",
       });
@@ -62,10 +62,10 @@ export default async (req, res) => {
           Authorization: DRIVER_SERVICE_BANK_TOKEN,
         },
       }
-    ).then((res) => res.json());
+    ).then((res) => res.status(400).json());
 
     if (status !== "completed") {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Tax payment was not paid yet",
       });
@@ -87,7 +87,7 @@ export default async (req, res) => {
       message: "Tax payment verified",
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

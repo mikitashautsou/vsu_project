@@ -18,7 +18,7 @@ export default async (req, res) => {
   try {
     const { saleId } = req.params;
     if (!saleId) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Sale id was not provided",
       });
@@ -33,7 +33,7 @@ export default async (req, res) => {
     });
 
     if (!sale) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Sale was not found",
       });
@@ -50,7 +50,7 @@ export default async (req, res) => {
         toAccountId: DRIVER_SERVICE_BANK_ACCOUNT_ID,
         amount: sale.price,
       }),
-    }).then((res) => res.json());
+    }).then((res) => res.status(400).json());
 
     await db.collection("sales").updateOne(
       {
@@ -70,7 +70,7 @@ export default async (req, res) => {
       transactionNumber,
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

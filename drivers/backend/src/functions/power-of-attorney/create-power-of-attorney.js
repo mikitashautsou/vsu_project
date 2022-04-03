@@ -17,7 +17,7 @@ export default async (req, res) => {
     const { body, headers } = req;
     const { carNo } = req.params;
     if (!carNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car no was not provided",
       });
@@ -36,14 +36,14 @@ export default async (req, res) => {
       carNo,
     });
     if (!car) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car not found",
       });
       return;
     }
     if (car.ownerId !== _id) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -55,12 +55,12 @@ export default async (req, res) => {
       fromUserId: _id,
       targetUserId,
     });
-    res.json({
+    res.status(400).json({
       status: "ok",
       message: "Power of attorney was created",
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

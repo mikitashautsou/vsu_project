@@ -18,7 +18,7 @@ export default async (req, res) => {
       body: sales.map(({ saleTransactionNo, ...sale }) => sale),
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

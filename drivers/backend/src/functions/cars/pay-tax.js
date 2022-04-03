@@ -16,7 +16,7 @@ export default async (req, res) => {
   try {
     const { carNo } = req.params;
     if (!carNo) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car no was not provided",
       });
@@ -31,7 +31,7 @@ export default async (req, res) => {
     });
 
     if (!car) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Car was not found",
       });
@@ -43,7 +43,7 @@ export default async (req, res) => {
       role !== "admin" &&
       car.ownerId.toString() !== _id
     ) {
-      res.json({
+      res.status(400).json({
         status: "error",
         message: "Access denied",
       });
@@ -59,7 +59,7 @@ export default async (req, res) => {
         toAccountId: DRIVER_SERVICE_BANK_ACCOUNT_ID,
         amount: TAX_AMOUNT,
       }),
-    }).then((res) => res.json());
+    }).then((res) => res.status(400).json());
     await db.collection("cars").updateOne(
       {
         carNo,
@@ -76,7 +76,7 @@ export default async (req, res) => {
       transactionNumber,
     });
   } catch (e) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: e.message,
     });

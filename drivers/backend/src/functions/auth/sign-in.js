@@ -19,7 +19,7 @@ export default async (req, res) => {
     password,
   });
   if (!user) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Invalid username or password",
     });
@@ -27,19 +27,19 @@ export default async (req, res) => {
   }
   const token = await createJWT(user);
   const { password: _, ...sanitizedUser } = user;
-  res.json({ token, user: sanitizedUser });
+  res.status(400).json({ token, user: sanitizedUser });
 };
 
 const validateBody = (req, res, body) => {
   if (!body.passportNo) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "passportNo was not specified",
     });
     return false;
   }
   if (!body.password) {
-    res.json({
+    res.status(400).json({
       status: "error",
       message: "Password was not specified",
     });
