@@ -1,13 +1,19 @@
 import { Db } from "mongodb";
 import { DB_NAME } from "../config/config.js";
 import { connectToDB } from "./db.js";
+import { extractUser } from "./token.js";
 import { validateBody } from "./validation.js";
 
 /**
- * @param {{ isDbNeeded?: boolean, funcBody: (params: { params: any, _req: import("express").Request, _res: import("express").Response, body: any, user: { _id: string, username: string, firstName: string, lastName: string, password: string, role: string}, db: Db }) => any, requiredFields: string[] } } config
+ * @param {{ isDbNeeded?: boolean,isUserNeeded?: boolean, funcBody: (params: { params: any, _req: import("express").Request, _res: import("express").Response, body: any, user: { _id: string, username: string, firstName: string, lastName: string, password: string, role: string}, db: Db }) => any, requiredFields: string[] } } config
  */
 export const createFunc =
-  ({ funcBody, requiredFields = [], isDbNeeded = false }) =>
+  ({
+    funcBody,
+    requiredFields = [],
+    isUserNeeded = false,
+    isDbNeeded = false,
+  }) =>
   /**
    *
    * @param {import("express").Request} req
@@ -17,6 +23,9 @@ export const createFunc =
     try {
       validateBody(req, requiredFields);
       let user;
+      if (isUserNeeded) {
+        user = await extractUser(req);
+      }
       let db;
       if (isDbNeeded) {
         db = await connectToDB(DB_NAME);

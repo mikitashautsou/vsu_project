@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "fb764b45-1519-4a1a-8120-cb38e055287a",
+		"name": "Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Get users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRjMGEzZTMyOWZiYWM5MThiNGFmODMiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MTY2NDQ0fQ.5gModcpKBThgqzZdX_a5XeRtxwYyEfa0wd91ke_yG1s",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "http://localhost:4000/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:4000/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\n            \"username\": \"m.shautsou4\",\n            \"firstName\": \"Mikita\",\n            \"lastName\": \"Shautsou\",\n            \"password\": \"test\",\n            \"role\": \"accountant\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/users/624c48bb36b3fef60e755621"
+					},
+					"response": []
+				},
+				{
+					"name": "get user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRjMGEzZTMyOWZiYWM5MThiNGFmODMiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MTY2NDQ0fQ.5gModcpKBThgqzZdX_a5XeRtxwYyEfa0wd91ke_yG1s",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "http://localhost:4000/users/624c48bb36b3fef60e755621"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "        {\n            \"username\": \"m.shautsou4\",\n            \"firstName\": \"Mikita\",\n            \"lastName\": \"Shautsou\",\n            \"password\": \"test\",\n            \"role\": \"admin\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/users/624c48bb36b3fef60e755621"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Sign in",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"m.shautsou\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"password\": \"test\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/sign-up"
+					},
+					"response": []
+				},
+				{
+					"name": "Validate token(Backend only)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"m.shautsou\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"password\": \"test\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/sign-up"
+					},
+					"response": []
+				},
+				{
+					"name": "Sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"m.shautsou\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"password\": \"test\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/sign-up"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRjMGEzZTMyOWZiYWM5MThiNGFmODMiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MTY2NDQ0fQ.5gModcpKBThgqzZdX_a5XeRtxwYyEfa0wd91ke_yG1s",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

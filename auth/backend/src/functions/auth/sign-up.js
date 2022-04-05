@@ -6,35 +6,36 @@ import { validateBody } from "../../common/validation.js";
  * @param {import("express").Request} req
  */
 export default async (req, res) => {
-  const { body } = req;
-  const isValid = validateBody(req, res, body, [
-    "username",
-    "firstName",
-    "lastName",
-    "password",
-  ]);
-  if (!isValid) {
-    return;
-  }
-  const newUser = body;
-  const db = await connectToDB(DB_NAME);
-  const existingUser = await db.collection("users").findOne({
-    username: body.username,
-  });
-  if (existingUser) {
+  try {
+    const { body } = req;
+    validateBody(req, ["username", "firstName", "lastName", "password"]);
+
+    const newUser = body;
+    const db = await connectToDB(DB_NAME);
+    const existingUser = await db.collection("users").findOne({
+      username: body.username,
+    });
+    if (existingUser) {
+      res.status(400).json({
+        status: "error",
+        message: "User with given username already exists",
+      });
+      return;
+    }
+    await db.collection("users").insertOne({
+      ...newUser,
+      role: "regular",
+    });
+    res.json({
+      status: "ok",
+      message: "User was created",
+    });
+  } catch (e) {
     res.status(400).json({
       status: "error",
-      message: "User with given username already exists",
+      message: e.message,
     });
   }
-  await db.collection("users").insertOne({
-    ...newUser,
-    role: "regular",
-  });
-  res.json({
-    status: "ok",
-    message: "User was created",
-  });
 };
 
 // const validateBody = (req, res, body) => {

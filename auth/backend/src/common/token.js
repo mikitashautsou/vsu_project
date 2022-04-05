@@ -1,4 +1,6 @@
-import { AUTH_SERVICE_URL } from "../config/config.js";
+import jsonwebtoken from "jsonwebtoken";
+import { AUTH_SERVICE_URL, JWT_SECRET } from "../config/config.js";
+import validateToken from "../functions/token/validate-token.js";
 import { post } from "./http.js";
 
 /**
@@ -7,13 +9,7 @@ import { post } from "./http.js";
  */
 export const extractUser = async (req) => {
   try {
-    const { body } = await post({
-      body: {
-        token: req.headers.authorization,
-      },
-      url: `${AUTH_SERVICE_URL}/token/validate`,
-    });
-    return body;
+    return await jsonwebtoken.verify(req.headers.authorization, JWT_SECRET);
   } catch (e) {
     console.error(e);
     throw new Error("User is not authenticated");
