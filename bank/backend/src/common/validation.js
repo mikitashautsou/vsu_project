@@ -3,7 +3,7 @@
  * @param {import("express").Response} res
  * @param {string[]} requiredFields
  */
-export const validateBody = (req, requiredFields) => {
+export const validateBody = (req, requiredFields = []) => {
   const unsetRequiredField = requiredFields.find(
     (rf) => req.body[rf] === undefined
   );

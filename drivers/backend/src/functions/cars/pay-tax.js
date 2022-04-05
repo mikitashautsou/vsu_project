@@ -1,84 +1,49 @@
-import fetch from "node-fetch";
-import { connectToDB } from "../../common/db.js";
-import { decodeJWT } from "../../common/jwt.js";
-import {
-  BANK_SERVICE_URL,
-  DRIVER_SERVICE_BANK_ACCOUNT_ID,
-  DRIVER_SERVICE_BANK_TOKEN,
-  TAX_AMOUNT,
-} from "../../config/config.js";
+import { ObjectId } from "mongodb";
+import { createFunc } from "../../common/create-func.js";
+import { post } from "../../common/http.js";
+import { requirePermissionAtLeast } from "../../common/permissions.js";
+import { BANK_SERVICE_URL, TAX_AMOUNT } from "../../config/config.js";
+import getDriverServiceAccountId from "../system/getDriverServiceAccountId.js";
+import getDriverServiceBankUser from "../system/getDriverServiceBankUser.js";
 
-/**
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
-export default async (req, res) => {
-  try {
-    const { carNo } = req.params;
-    if (!carNo) {
-      res.status(400).json({
-        status: "error",
-        message: "Car no was not provided",
-      });
-      return;
-    }
-
-    const { role, _id } = decodeJWT(req.headers.authorization);
-
-    const db = await connectToDB();
+export default createFunc({
+  requiredFields: [],
+  isDbNeeded: true,
+  isUserNeeded: true,
+  funcBody: async ({ params: { carNo }, db, user }) => {
     const car = await db.collection("cars").findOne({
-      carNo,
+      _id: new ObjectId(carNo),
     });
 
     if (!car) {
-      res.status(400).json({
-        status: "error",
-        message: "Car was not found",
-      });
-      return;
+      throw new Error("Car was not found");
     }
 
-    if (
-      role !== "policeman" &&
-      role !== "admin" &&
-      car.ownerId.toString() !== _id
-    ) {
-      res.status(400).json({
-        status: "error",
-        message: "Access denied",
-      });
+    if (car.ownerId.toString() !== user._id) {
+      requirePermissionAtLeast(user.role, "policeman");
     }
 
-    const { transactionNumber } = await fetch(`${BANK_SERVICE_URL}/request`, {
-      method: "post",
+    const {
+      token,
+      user: { _id },
+    } = await getDriverServiceBankUser();
+    const toAccountId = await getDriverServiceAccountId();
+    const {
+      response: { requestId: transactionNumber },
+    } = await post({
+      url: `${BANK_SERVICE_URL}/users/${_id}/accounts/${toAccountId}/request`,
       headers: {
-        Authorization: DRIVER_SERVICE_BANK_TOKEN,
-        "Content-Type": "application/json",
+        authorization: token,
       },
-      body: JSON.stringify({
-        toAccountId: DRIVER_SERVICE_BANK_ACCOUNT_ID,
+      body: {
         amount: TAX_AMOUNT,
-      }),
-    }).then((res) => res.status(400).json());
-    await db.collection("cars").updateOne(
-      {
-        carNo,
+        description: "Car Tax Payment",
       },
-      {
-        $set: {
-          taxPaymentTransactionNo: transactionNumber,
-        },
-      }
-    );
-    res.json({
-      status: "ok",
+    });
+
+    return {
       message: "Transfer requested for tax",
       transactionNumber,
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: "error",
-      message: e.message,
-    });
-  }
-};
+    };
+  },
+});

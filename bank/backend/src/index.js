@@ -1,8 +1,13 @@
 import express from "express";
 import cors from "cors";
 import { PORT } from "./config/config.js";
-import createAccount from "./functions/users/create-account.js";
-import getAccounts from "./functions/users/get-accounts.js";
+import createAccount from "./functions/accounts/create-account.js";
+import getAccounts from "./functions/accounts/get-accounts.js";
+import getAllAccounts from "./functions/accounts/get-all-accounts.js";
+import deleteAccount from "./functions/accounts/delete-account.js";
+import deposit from "./functions/ntransactions/deposit.js";
+import createRequest from "./functions/ntransactions/create-request.js";
+import completeRequest from "./functions/ntransactions/complete-request.js";
 // import signUp from "./functions/auth/sign-up.js";
 // import signIn from "./functions/auth/sign-in.js";
 // import createAccount from "./functions/users/create-user.js";
@@ -26,15 +31,21 @@ app.use(cors());
 // app.get("/transactions/:transactionNumber", getTransaction);
 // app.get("/transactions", getTransactions);
 // app.post("/transfer", transfer);
-// app.post("/deposit", deposit);
+app.put("/users/:userId/accounts/:accountId/deposit", deposit);
+app.post("/users/:userId/accounts/:accountId/request", createRequest);
+app.post(
+  "/users/:userId/accounts/:accountId/complete-request/:requestId",
+  completeRequest
+);
 // app.post("/request", createRequest);
 // app.post("/completeRequest", completeRequest);
 
-app.post("/accounts", createAccount);
-app.get("/:userId/accounts", getAccounts);
+app.post("/users/:userId/accounts", createAccount);
+app.get("/users/:userId/accounts", getAccounts);
+app.get("/accounts", getAllAccounts);
+// app.patch("/users/:userId/accounts/:accountId", updateUser);
 // app.get("/users/:accountId", getUser);
-// app.patch("/users/:accountId", updateUser);
-// app.delete("/users/:accountId", deleteUser);
+app.delete("/users/:accountId", deleteAccount);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

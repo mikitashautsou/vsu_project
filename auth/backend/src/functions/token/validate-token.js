@@ -8,10 +8,7 @@ import jsonwebtoken from "jsonwebtoken";
  */
 export default async (req, res) => {
   const { body } = req;
-  const isValid = validateBody(req, res, body, ["token"]);
-  if (!isValid) {
-    return;
-  }
+  validateBody(req, ["token"]);
   try {
     const result = await jsonwebtoken.verify(body.token, JWT_SECRET);
     res.json({

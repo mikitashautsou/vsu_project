@@ -1,8 +1,6 @@
 import express from "express";
 import cors from "cors";
-import signUp from "./functions/auth/sign-up.js";
 import { SERVER_PORT } from "./config/config.js";
-import signIn from "./functions/auth/sign-in.js";
 import createCar from "./functions/cars/create-car.js";
 import getCars from "./functions/cars/get-cars.js";
 import payTax from "./functions/cars/pay-tax.js";
@@ -16,6 +14,8 @@ import getPoas from "./functions/power-of-attorney/get-poas.js";
 import getPoa from "./functions/power-of-attorney/get-poa.js";
 import deletePoa from "./functions/power-of-attorney/delete-poa.js";
 import updatePoa from "./functions/power-of-attorney/update-poa.js";
+import init from "./functions/system/getDriverServiceBankUser.js";
+import getDriverServiceAccountId from "./functions/system/getDriverServiceAccountId.js";
 
 const app = express();
 
@@ -45,19 +45,16 @@ app.delete("/cars/:carNo/poa/:poaId", deletePoa);
 // app.post("/cars/:carNo/taxes", payTax);
 // app.post("/cars/:carNo/taxes/verify", verifyTaxPayment);
 
-
 app.post("/trade/sales", sellCar);
 app.get("/trade/sales", getSellRequests);
 app.post("/trade/sales/:saleId/buy", buyCar);
 app.post("/trade/sales/:saleId/verify", verifySalePayment);
 // app.get("/trade/sales", verifyTaxPayment);
 
-app.post("/auth/sign-up", signUp);
-app.post("/auth/sign-in", signIn);
 // app.post("/deposit", deposit);
 
 app.listen(SERVER_PORT, () => {
-  console.log(`Example app listening on port ${SERVER_PORT}`);
+  console.log(`Driver service listening on ${SERVER_PORT}`);
 });
 
 // 2. автомобили (регистрация автомобилей, их владельцев, выписанных доверенностей, их состояния, не находятся ли в угоне, фиксация покупки-продажи автомобилей и уплаты гос. пошлин при оформлении документов);
