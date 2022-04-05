@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { PORT } from "./config/config.js";
-import createAccount from "./functions/users/create-account.js";
-import getAccounts from "./functions/users/get-accounts.js";
+import signUp from "./functions/auth/sign-up.js";
+import signIn from "./functions/auth/sign-in.js";
+import validateToken from "./functions/token/validate-token.js";
+import getUsers from "./functions/users/get-users.js";
 // import signUp from "./functions/auth/sign-up.js";
 // import signIn from "./functions/auth/sign-in.js";
 // import createAccount from "./functions/users/create-user.js";
@@ -23,6 +24,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+app.post("/sign-up", signUp);
+app.post("/sign-in", signIn);
+app.post("/token/validate", validateToken);
+
+app.get("/users", getUsers);
 // app.get("/transactions/:transactionNumber", getTransaction);
 // app.get("/transactions", getTransactions);
 // app.post("/transfer", transfer);
@@ -30,12 +36,14 @@ app.use(cors());
 // app.post("/request", createRequest);
 // app.post("/completeRequest", completeRequest);
 
-app.post("/accounts", createAccount);
-app.get("/:userId/accounts", getAccounts);
+// app.get("/users", getUsers);
 // app.get("/users/:accountId", getUser);
 // app.patch("/users/:accountId", updateUser);
 // app.delete("/users/:accountId", deleteUser);
 
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+// app.post("/auth/sign-up", signUp);
+// app.post("/auth/sign-in", signIn);
+
+app.listen(4000, () => {
+  console.log(`Example app listening on port ${4000}`);
 });

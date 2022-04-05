@@ -1,21 +1,21 @@
 import { connectToDB } from "../../common/db.js";
 import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
-import { generateRandomNumber } from "../../common/num.js";
+import { validateBody } from "../../common/validation.js";
 
 /**
  * @param {import("express").Request} req
  */
 export default async (req, res) => {
   const { body } = req;
-  const isValid = validateBody(req, res, body);
+  const isValid = validateBody(req, res, body, ["username", "password"]);
   if (!isValid) {
     return;
   }
-  const { accountId, password } = body;
+  const { username, password } = body;
   const authDb = await connectToDB(DB_NAME);
   const user = await authDb.collection("users").findOne({
-    accountId,
+    username,
     password,
   });
   if (!user) {
@@ -27,24 +27,6 @@ export default async (req, res) => {
   const token = await createJWT(user);
   const { password: _, ...sanitizedUser } = user;
   res.json({ token, user: sanitizedUser });
-};
-
-const validateBody = (req, res, body) => {
-  if (!body.accountId) {
-    res.status(400).json({
-      status: "error",
-      message: "accountId was not specified",
-    });
-    return false;
-  }
-  if (!body.password) {
-    res.status(400).json({
-      status: "error",
-      message: "Password was not specified",
-    });
-    return false;
-  }
-  return true;
 };
 
 const createJWT = (user) => {

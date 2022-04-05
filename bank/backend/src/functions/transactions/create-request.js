@@ -1,7 +1,7 @@
 import { connectToDB, getMongoClient } from "../../common/db.js";
 import { DB_NAME, JWT_SECRET } from "../../config/config.js";
 import jwt from "jsonwebtoken";
-import { decodeJWT } from "../../common/jwt.js";
+import { decodeJWT } from "../../common/token.js";
 import { ObjectId } from "mongodb";
 import { generateRandomNumber } from "../../common/num.js";
 
