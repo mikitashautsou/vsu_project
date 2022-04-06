@@ -1,39 +1,42 @@
-import { connectToDB } from "../../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../../config/config.js";
-import jwt from "jsonwebtoken";
-import { decodeJWT } from "../../common/token.js";
+import { ObjectId } from "mongodb";
+import { createFunc } from "../../common/create-func.js";
+import { requirePermissionAtLeast } from "../../common/permissions.js";
 
-/**
- * @param {import("express").Request} req
- */
-export default async (req, res) => {
-  try {
-    const { headers } = req;
-    const result = decodeJWT(headers.authorization);
-    const { _id, role, accountId } = result;
-    const bankDb = await connectToDB(DB_NAME);
-
-    const { transactionNumber } = req.params;
-
-    let transaction = await bankDb.collection("transactions").findOne({
-      transactionNumber,
-    });
-    if (
-      transaction.fromAccountId !== accountId &&
-      transaction.toAccountId !== accountId &&
-      (role === "accountant" || role === "admin")
-    ) {
-      res.status(400).json({
-        status: "error",
-        message: "access denied",
-      });
-      return;
+export default createFunc({
+  isDbNeeded: true,
+  isUserNeeded: true,
+  requiredFields: [],
+  funcBody: async ({
+    db,
+    user,
+    params: { userId, accountId, transactionId },
+  }) => {
+    if (user._id !== userId) {
+      requirePermissionAtLeast(user.role, "accountant");
     }
-    res.json({
-      status: "ok",
-      body: transaction,
+    const account = await db.collection("accounts").findOne({
+      _id: new ObjectId(accountId),
     });
-  } catch (e) {
-    res.status(400).json({ status: "error", message: e.message });
-  }
-};
+    if (!account) {
+      throw new Error("Account was not found");
+    }
+    if (account.userId !== userId) {
+      requirePermissionAtLeast(user.role, "accountant");
+    }
+    console.log({
+      transactionId,
+      accountId,
+    });
+    return await db.collection("transactions").findOne({
+      _id: new ObjectId(transactionId),
+      $or: [
+        {
+          fromAccountId: accountId,
+        },
+        {
+          toAccountId: accountId,
+        },
+      ],
+    });
+  },
+});

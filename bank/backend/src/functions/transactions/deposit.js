@@ -1,81 +1,41 @@
-import { connectToDB, getMongoClient } from "../../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../../config/config.js";
-import jwt from "jsonwebtoken";
-import { decodeJWT } from "../../common/token.js";
 import { ObjectId } from "mongodb";
-import { generateRandomNumber } from "../../common/num.js";
+import { createFunc as createHandler } from "../../common/create-func.js";
+import {
+  requirePermissionAtLeast,
+  requirePermissions,
+} from "../../common/permissions.js";
 
-/**
- * @param {import("express").Request} req
- */
-export default async (req, res) => {
-  try {
-    const { headers, body } = req;
-    const isValid = validateBody(req, res, body);
-    if (!isValid) {
-      return;
-    }
+export default createHandler({
+  requiredFields: ["amount"],
+  isUserNeeded: true,
+  isDbNeeded: true,
+  funcBody: async ({
+    user,
+    db,
+    params: { accountId, userId },
+    body: { amount },
+  }) => {
+    requirePermissionAtLeast(user.role, "manager");
 
-    const { accountId, amount } = body;
-    const result = decodeJWT(headers.authorization);
-    const { _id, role } = result;
-    const bankDb = await connectToDB(DB_NAME);
-
-    let transactions;
-    if (role !== "accountant" && role !== "admin") {
-      res.status(400).json({
-        status: "error",
-        message: "Access denied",
-      });
-      return;
-    }
-    const destinationAccount = await bankDb.collection("users").findOne({
-      accountId,
+    const account = await db.collection("accounts").findOne({
+      _id: new ObjectId(accountId),
+      userId,
     });
-
-    if (!destinationAccount) {
-      res.status(400).json({
-        status: "error",
-        message: "Destination account not found",
-      });
-      return;
+    if (!account) {
+      throw new Error("Account was not found");
     }
 
-    destinationAccount.balance += amount;
-
-    await bankDb.collection("users").updateOne(
+    await db.collection("accounts").updateOne(
       {
-        _id: destinationAccount._id,
+        _id: new ObjectId(accountId),
+        userId,
       },
       {
         $set: {
-          balance: destinationAccount.balance,
+          balance: account.balance + amount,
         },
       }
     );
-    res.json({
-      status: "ok",
-      message: "Funds deposited",
-    });
-  } catch (e) {
-    res.status(400).json({ status: "error", message: e.message });
-  }
-};
-
-const validateBody = (req, res, body) => {
-  if (!body.accountId) {
-    res.status(400).json({
-      status: "error",
-      message: "Destination account id was not specified",
-    });
-    return false;
-  }
-  if (!body.amount) {
-    res.status(400).json({
-      status: "error",
-      message: "Amount was not specified",
-    });
-    return false;
-  }
-  return true;
-};
+    return "Funds deposited";
+  },
+});

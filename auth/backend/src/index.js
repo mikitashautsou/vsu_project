@@ -8,6 +8,7 @@ import createUser from "./functions/users/create-user.js";
 import updateUser from "./functions/users/update-user.js";
 import getUser from "./functions/users/get-user.js";
 import deleteUser from "./functions/users/delete-user.js";
+import { SERVER_PORT } from "./config/config.js";
 // import signUp from "./functions/auth/sign-up.js";
 // import signIn from "./functions/auth/sign-in.js";
 // import createAccount from "./functions/users/create-user.js";
@@ -52,6 +53,6 @@ app.delete("/users/:userId", deleteUser);
 // app.post("/auth/sign-up", signUp);
 // app.post("/auth/sign-in", signIn);
 
-app.listen(4000, () => {
-  console.log(`Example app listening on port ${4000}`);
+app.listen(SERVER_PORT, () => {
+  console.log(`Example app listening on port ${SERVER_PORT}`);
 });

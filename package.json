@@ -1,0 +1,26 @@
+{
+  "name": "sem8",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start:auth & npm run start:bank & npm run start:drivers",
+    "start:auth": "cd auth/backend && npm run start",
+    "start:bank": "cd bank/backend && npm run start",
+    "start:drivers": "cd drivers/backend && npm run start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mikitashautsou/vsu_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mikitashautsou/vsu_project/issues"
+  },
+  "homepage": "https://github.com/mikitashautsou/vsu_project#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}

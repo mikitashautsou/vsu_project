@@ -4,18 +4,17 @@ import { SERVER_PORT } from "./config/config.js";
 import createCar from "./functions/cars/create-car.js";
 import getCars from "./functions/cars/get-cars.js";
 import payTax from "./functions/cars/pay-tax.js";
-import verifyTaxPayment from "./functions/cars/verify-tax-payment.js";
 import sellCar from "./functions/trade/sell-car.js";
 import getSellRequests from "./functions/trade/get-sell-requests.js";
 import buyCar from "./functions/trade/buy-car.js";
-import verifySalePayment from "./functions/trade/verify-sale-payment.js";
-import createPowerOfAttorney from "./functions/power-of-attorney/create-power-of-attorney.js";
+import createPowerOfAttorney from "./functions/power-of-attorney/create-poa.js";
 import getPoas from "./functions/power-of-attorney/get-poas.js";
 import getPoa from "./functions/power-of-attorney/get-poa.js";
 import deletePoa from "./functions/power-of-attorney/delete-poa.js";
 import updatePoa from "./functions/power-of-attorney/update-poa.js";
 import init from "./functions/system/getDriverServiceBankUser.js";
 import getDriverServiceAccountId from "./functions/system/getDriverServiceAccountId.js";
+import createPoa from "./functions/power-of-attorney/create-poa.js";
 
 const app = express();
 
@@ -31,24 +30,30 @@ app.use(cors());
 // app.patch("/users/:accountId", updateUser);
 // app.delete("/users/:accountId", deleteUser);
 
-app.post("/cars", createCar);
-app.get("/cars", getCars);
-app.post("/cars/:carNo/taxes", payTax);
-app.post("/cars/:carNo/taxes/verify", verifyTaxPayment);
+app.post("/users/:userId/cars", createCar);
+app.get("/users/:userId/cars", getCars);
+app.post("/users/:userId/cars/:carNo/taxes", payTax);
 
-app.post("/cars/:carNo/poa", createPowerOfAttorney);
-app.get("/cars/:carNo/poa", getPoas);
-app.get("/cars/:carNo/poa/:poaId", getPoa);
-app.patch("/cars/:carNo/poa/:poaId", updatePoa);
-app.delete("/cars/:carNo/poa/:poaId", deletePoa);
+// app.post("/cars/:carNo/poa", createPowerOfAttorney);
+// app.get("/cars/:carNo/poa", getPoas);
+// app.get("/cars/:carNo/poa/:poaId", getPoa);
+// app.patch("/cars/:carNo/poa/:poaId", updatePoa);
+// app.delete("/cars/:carNo/poa/:poaId", deletePoa);
+
+app.post("/users/:userId/poas", createPoa);
+app.get("/users/:userId/poas", getPoas);
+app.get("/users/:userId/poas/:poaId", getPoa);
+app.patch("/users/:userId/poas/:poaId", updatePoa);
+app.delete("/users/:userId/poas/:poaId", deletePoa);
 // app.get("/cars", getCars);
 // app.post("/cars/:carNo/taxes", payTax);
 // app.post("/cars/:carNo/taxes/verify", verifyTaxPayment);
 
-app.post("/trade/sales", sellCar);
-app.get("/trade/sales", getSellRequests);
-app.post("/trade/sales/:saleId/buy", buyCar);
-app.post("/trade/sales/:saleId/verify", verifySalePayment);
+app.post("/users/:userId/cars/:carNo/sell", sellCar);
+app.get("/sales", getSellRequests);
+app.post("/sales/:saleId", buyCar);
+// app.post("/sales/:saleId/buy", buyCar);
+// app.post("/sales/:saleId/verify", verifySalePayment);
 // app.get("/trade/sales", verifyTaxPayment);
 
 // app.post("/deposit", deposit);

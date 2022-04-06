@@ -1,83 +1,39 @@
-import { connectToDB, getMongoClient } from "../../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../../config/config.js";
-import jwt from "jsonwebtoken";
-import { decodeJWT } from "../../common/token.js";
 import { ObjectId } from "mongodb";
-import { generateRandomNumber } from "../../common/num.js";
+import { createFunc as createHandler } from "../../common/create-func.js";
+import { requirePermissionAtLeast } from "../../common/permissions.js";
 
-/**
- * @param {import("express").Request} req
- */
-export default async (req, res) => {
-  try {
-    const { headers, body } = req;
-    const isValid = validateBody(req, res, body);
-    if (!isValid) {
-      return;
+export default createHandler({
+  requiredFields: ["amount", "description"],
+  isUserNeeded: true,
+  isDbNeeded: true,
+  funcBody: async ({
+    user,
+    db,
+    params: { accountId, userId },
+    body: { amount, description },
+  }) => {
+    if (userId !== user._id) {
+      requirePermissionAtLeast(user.role, "manager");
     }
 
-    const { toAccountId, amount } = body;
-    const { _id, role, accountId } = decodeJWT(headers.authorization);
-    const bankDb = await connectToDB(DB_NAME);
-
-    let transactions;
-    if (
-      role !== "accountant" &&
-      role !== "admin" &&
-      toAccountId !== accountId
-    ) {
-      res.status(400).json({
-        status: "error",
-        message: "Access denied",
-      });
-      return;
-    }
-    const destinationAccount = await bankDb.collection("users").findOne({
-      accountId: toAccountId,
+    const account = await db.collection("accounts").findOne({
+      _id: new ObjectId(accountId),
+      userId,
     });
-
-    if (!destinationAccount) {
-      res.status(400).json({
-        status: "error",
-        message: "Destination account not found",
-      });
-      return;
+    if (!account || account.userId !== userId) {
+      throw new Error("Account was not found");
     }
 
-    const transactionNumber = generateRandomNumber();
-    await bankDb.collection("transactions").insertOne({
-      transactionNumber,
-      fromAccountId: undefined,
-      toAccountId,
-      amount,
-      date: undefined,
-      initiator: undefined,
+    const { insertedId } = await db.collection("transactions").insertOne({
+      fromAccountId: null,
+      toAccountId: accountId,
+      date: null,
       status: "requested",
+      amount,
+      description,
     });
-    res.json({
-      status: "ok",
-      message: "Transaction requested",
-      transactionNumber,
-    });
-  } catch (e) {
-    res.status(400).json({ status: "error", message: e.message });
-  }
-};
-
-const validateBody = (req, res, body) => {
-  if (!body.toAccountId) {
-    res.status(400).json({
-      status: "error",
-      message: "Destination account id was not specified",
-    });
-    return false;
-  }
-  if (!body.amount) {
-    res.status(400).json({
-      status: "error",
-      message: "Amount was not specified",
-    });
-    return false;
-  }
-  return true;
-};
+    return {
+      requestId: insertedId,
+    };
+  },
+});

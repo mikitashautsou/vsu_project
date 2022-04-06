@@ -11,15 +11,18 @@ export const CAR_STATE = {
 export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
-  requiredFields: ["model", "carNo", "ownerId"],
-  funcBody: async ({ user, body: { model, carNo, ownerId }, db }) => {
+  requiredFields: ["model", "ownerId"],
+  funcBody: async ({
+    user,
+    body: { model },
+    db,
+    params: { userId: ownerId },
+  }) => {
     requirePermissionAtLeast(user.role, "policeman");
 
     await db.collection("cars").insertOne({
       model,
       state: CAR_STATE.NEW,
-      carNo,
-      taxPaymentTransactionNo: null,
       ownerId,
     });
   },

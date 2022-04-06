@@ -1,6 +1,6 @@
 export const DB_NAME = "auth";
 export const JWT_SECRET = "2022";
-export const SERVER_PORT = 4001;
+export const SERVER_PORT = 4000;
 export const DB_HOST = "mongodb://127.0.0.1:27017";
 export const AUTH_SERVICE_URL = "http://localhost:4000";
 // export const BANK_SERVICE_URL = "http://127.0.0.1:4000";

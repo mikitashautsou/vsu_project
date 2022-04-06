@@ -1,133 +1,88 @@
-import { connectToDB, getMongoClient } from "../../common/db.js";
-import { DB_NAME, JWT_SECRET } from "../../config/config.js";
-import jwt from "jsonwebtoken";
-import { decodeJWT } from "../../common/token.js";
 import { ObjectId } from "mongodb";
-import { generateRandomNumber } from "../../common/num.js";
+import { createFunc as createHandler } from "../../common/create-func.js";
+import { requirePermissionAtLeast } from "../../common/permissions.js";
 
-/**
- * @param {import("express").Request} req
- */
-export default async (req, res) => {
-  try {
-    const { headers, body } = req;
-    const isValid = validateBody(req, res, body);
-    if (!isValid) {
-      return;
+export default createHandler({
+  requiredFields: [],
+  isUserNeeded: true,
+  isDbNeeded: true,
+  funcBody: async ({ user, db, params: { accountId, userId, requestId } }) => {
+    if (userId !== user._id) {
+      requirePermissionAtLeast(user.role, "manager");
     }
 
-    const { fromAccountId, transferRequestNo } = body;
-    const result = decodeJWT(headers.authorization);
-    const { _id, role, accountId } = result;
-    const bankDb = await connectToDB(DB_NAME);
-
-    let transactions;
-    if (
-      role !== "accountant" &&
-      role !== "admin" &&
-      fromAccountId !== accountId
-    ) {
-      res.status(400).json({
-        status: "error",
-        message: "Access denied",
-      });
-      return;
-    }
-
-    const requestModel = await bankDb.collection("transactions").findOne({
-      transactionNumber: transferRequestNo,
-      status: "requested",
+    const account = await db.collection("accounts").findOne({
+      _id: new ObjectId(accountId),
+      userId,
     });
-    if (!requestModel) {
-      res.status(400).json({
-        status: "error",
-        message: "Transfer request not found",
-      });
+    if (!account || account.userId !== userId) {
+      throw new Error("Account was not found");
     }
-    const sourceAccount = await bankDb.collection("users").findOne({
-      accountId: fromAccountId,
+
+    const transaction = await db.collection("transactions").findOne({
+      _id: new ObjectId(requestId),
     });
 
-    if (sourceAccount.balance < requestModel.amount) {
-      res.status(400).json({
-        status: "error",
-        message: "Not enough founds",
-      });
-      return;
+    if (!transaction) {
+      throw new Error("Transaction was not found");
+    }
+    if (transaction.status !== "requested") {
+      throw new Error("Request already fulfilled");
     }
 
-    const destinationAccount = await bankDb.collection("users").findOne({
-      accountId: requestModel.toAccountId,
+    const sourceAccount = await db.collection("accounts").findOne({
+      _id: new ObjectId(accountId),
+    });
+
+    if (sourceAccount?.balance < transaction.amount) {
+      throw new Error("Not enough founds");
+    }
+    const destinationAccount = await db.collection("accounts").findOne({
+      _id: new ObjectId(transaction.toAccountId),
     });
 
     if (!destinationAccount) {
-      res.status(400).json({
-        status: "error",
-        message: "Destination account not found",
-      });
-      return;
+      throw new Error("Account was not found");
     }
 
-    sourceAccount.balance -= requestModel.amount;
-    destinationAccount.balance += requestModel.amount;
-
-    await bankDb.collection("users").updateOne(
+    await db.collection("accounts").updateOne(
       {
-        _id: sourceAccount._id,
+        _id: new ObjectId(destinationAccount._id),
       },
       {
         $set: {
-          balance: sourceAccount.balance,
-        },
-      }
-    );
-    await bankDb.collection("users").updateOne(
-      {
-        _id: destinationAccount._id,
-      },
-      {
-        $set: {
-          balance: destinationAccount.balance,
+          balance: destinationAccount.balance + transaction.amount,
         },
       }
     );
 
-    await bankDb.collection("transactions").updateOne(
+    await db.collection("accounts").updateOne(
       {
-        transactionNumber: requestModel.transactionNumber,
+        _id: new ObjectId(sourceAccount._id),
       },
       {
         $set: {
-          fromAccountId: fromAccountId,
+          balance: sourceAccount.balance - transaction.amount,
+        },
+      }
+    );
+
+    await db.collection("transactions").updateOne(
+      {
+        _id: new ObjectId(requestId),
+      },
+      {
+        $set: {
+          fromAccountId: sourceAccount._id.toString(),
           date: new Date(),
-          initiator: `${sourceAccount.firstName} ${sourceAccount.lastName}`,
           status: "completed",
         },
       }
     );
-    res.json({
-      status: "ok",
-      message: "Transfer request completed",
-    });
-  } catch (e) {
-    res.status(400).json({ status: "error", message: e.message });
-  }
-};
 
-const validateBody = (req, res, body) => {
-  if (!body.fromAccountId) {
-    res.status(400).json({
-      status: "error",
-      message: "Source account id was not specified",
-    });
-    return false;
-  }
-  if (!body.transferRequestNo) {
-    res.status(400).json({
-      status: "error",
-      message: "transferRequestNo account id was not specified",
-    });
-    return false;
-  }
-  return true;
-};
+    return {
+      status: "ok",
+      message: "completed",
+    };
+  },
+});

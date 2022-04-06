@@ -1,56 +1,52 @@
+import { ObjectId } from "mongodb";
+import { createFunc } from "../../common/create-func.js";
 import { connectToDB } from "../../common/db.js";
 import { decodeJWT } from "../../common/jwt.js";
+import { requirePermissionAtLeast } from "../../common/permissions.js";
 import { validateBody } from "../../common/validation.js";
+import { CAR_STATE } from "../cars/create-car.js";
 
 export const SALE_STATE = {
   NEW: "new",
   IN_PROGRESS: "in-progress",
   COMPLETED: "completed",
 };
-/**
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- */
-export default async (req, res) => {
-  try {
-    const result = decodeJWT(req.headers.authorization);
-    const { _id: userId, role } = result;
-    const { body } = req;
-    const isValid = validateBody(req, res, body, ["carNo", "price"]);
-    if (!isValid) {
-      return;
-    }
 
-    const { carNo, price } = body;
-
-    const db = await connectToDB();
+export default createFunc({
+  isDbNeeded: true,
+  isUserNeeded: true,
+  requiredFields: ["destinationAccountId", "price"],
+  funcBody: async ({
+    user,
+    db,
+    params: { userId, carNo },
+    body: { destinationAccountId, price },
+  }) => {
     const car = await db.collection("cars").findOne({
-      carNo,
+      _id: new ObjectId(carNo),
     });
-    if (userId !== car.ownerId && ["admin", "policeman"].includes(role)) {
-      res.status(400).json({
-        status: "error",
-        message: "Access denied",
-      });
-      return;
+
+    if (userId !== user._id || userId !== car.ownerId) {
+      requirePermissionAtLeast(user.role, "policeman");
     }
 
     await db.collection("sales").insertOne({
-      carNo,
+      carId: carNo,
       state: SALE_STATE.NEW,
       price,
-      saleTransactionNo: undefined,
+      destinationAccountId,
       ownerId: userId,
     });
 
-    res.json({
-      status: "ok",
-      message: "Sale position was created",
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: "error",
-      message: e.message,
-    });
-  }
-};
+    await db.collection("cars").updateOne(
+      { _id: new ObjectId(carNo) },
+      {
+        $set: {
+          state: CAR_STATE.ON_SALE,
+        },
+      }
+    );
+
+    return "Sale position was created";
+  },
+});
