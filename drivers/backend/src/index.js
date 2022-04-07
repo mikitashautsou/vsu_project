@@ -15,6 +15,9 @@ import updatePoa from "./functions/power-of-attorney/update-poa.js";
 import init from "./functions/system/getDriverServiceBankUser.js";
 import getDriverServiceAccountId from "./functions/system/getDriverServiceAccountId.js";
 import createPoa from "./functions/power-of-attorney/create-poa.js";
+import updateCar from "./functions/cars/update-car.js";
+import deleteCar from "./functions/cars/delete-car.js";
+import deleteSale from "./functions/trade/delete-sale.js";
 
 const app = express();
 
@@ -32,6 +35,9 @@ app.use(cors());
 
 app.post("/users/:userId/cars", createCar);
 app.get("/users/:userId/cars", getCars);
+app.patch("/users/:userId/cars/:carId", updateCar);
+app.delete("/users/:userId/cars/:carId", deleteCar);
+
 app.post("/users/:userId/cars/:carNo/taxes", payTax);
 
 // app.post("/cars/:carNo/poa", createPowerOfAttorney);
@@ -52,6 +58,8 @@ app.delete("/users/:userId/poas/:poaId", deletePoa);
 app.post("/users/:userId/cars/:carNo/sell", sellCar);
 app.get("/sales", getSellRequests);
 app.post("/sales/:saleId", buyCar);
+app.delete("/sales/:saleId", deleteSale);
+
 // app.post("/sales/:saleId/buy", buyCar);
 // app.post("/sales/:saleId/verify", verifySalePayment);
 // app.get("/trade/sales", verifyTaxPayment);

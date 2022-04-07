@@ -30,6 +30,10 @@ export default createFunc({
       requirePermissionAtLeast(user.role, "policeman");
     }
 
+    if (car.state !== CAR_STATE.TAX_PAID) {
+      throw new Error("Tax should be paid in the first place");
+    }
+
     await db.collection("sales").insertOne({
       carId: carNo,
       state: SALE_STATE.NEW,

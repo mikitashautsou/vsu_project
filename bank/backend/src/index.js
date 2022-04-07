@@ -11,6 +11,7 @@ import completeRequest from "./functions/transactions/complete-request.js";
 import getTransactions from "./functions/transactions/get-transactions.js";
 import getTransaction from "./functions/transactions/get-transaction.js";
 import transfer from "./functions/transactions/transfer.js";
+import updateAccount from "./functions/accounts/update-account.js";
 // import signUp from "./functions/auth/sign-up.js";
 // import signIn from "./functions/auth/sign-in.js";
 // import createAccount from "./functions/users/create-user.js";
@@ -53,9 +54,10 @@ app.post("/users/:userId/accounts/:accountId/transfer", transfer);
 app.post("/users/:userId/accounts", createAccount);
 app.get("/users/:userId/accounts", getAccounts);
 app.get("/accounts", getAllAccounts);
+app.patch("/users/:userId/accounts/:accountId", updateAccount);
+app.delete("/users/:userId/accounts/:accountId", deleteAccount);
 // app.patch("/users/:userId/accounts/:accountId", updateUser);
 // app.get("/users/:accountId", getUser);
-app.delete("/users/:accountId", deleteAccount);
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

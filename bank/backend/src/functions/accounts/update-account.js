@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { createFunc as createHandler } from "../../common/create-func.js";
 import {
   requirePermissionAtLeast,
@@ -8,15 +9,24 @@ export default createHandler({
   requiredFields: [],
   isUserNeeded: true,
   isDbNeeded: true,
-  funcBody: async ({ user, db, params: { userId, accountId } }) => {
-    if (user._id !== userId) {
-      requirePermissionAtLeast(user.role, "manager");
+  funcBody: async ({ user, db, params: { userId, accountId }, body }) => {
+    if (body.balance !== undefined) {
+      requirePermissionAtLeast(user.role, "accountant");
     }
-    await db.collection("accounts").insertOne({
-      userId,
-      accountId,
-      balance: 0,
-    });
-    return "account created";
+
+    if (user._id !== userId) {
+      requirePermissionAtLeast(user.role, "accountant");
+    }
+    await db.collection("accounts").updateOne(
+      {
+        _id: new ObjectId(accountId),
+      },
+      {
+        $set: {
+          ...body,
+        },
+      }
+    );
+    return "account updated";
   },
 });
