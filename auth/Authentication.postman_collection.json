@@ -28,7 +28,23 @@
 					"name": "Create user",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRjMGEzZTMyOWZiYWM5MThiNGFmODMiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MTY2NDQ0fQ.5gModcpKBThgqzZdX_a5XeRtxwYyEfa0wd91ke_yG1s",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"user2\",\n    \"firstName\": \"User2\",\n    \"lastName\": \"User2\",\n    \"password\": \"test\",\n    \"role\": \"admin\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": "http://localhost:4000/users"
 					},
 					"response": []
@@ -40,19 +56,22 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "        {\n            \"username\": \"m.shautsou4\",\n            \"firstName\": \"Mikita\",\n            \"lastName\": \"Shautsou\",\n            \"password\": \"test\",\n            \"role\": \"accountant\"\n        }",
+							"raw": "        {\n            \"role\": \"regular\"\n        }",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:4000/users/624c48bb36b3fef60e755621"
+						"url": "http://localhost:4000/users/624f0cc246391ac7506f1e12"
 					},
 					"response": []
 				},
 				{
 					"name": "get user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [
@@ -63,7 +82,11 @@
 								"disabled": true
 							}
 						],
-						"url": "http://localhost:4000/users/624c48bb36b3fef60e755621"
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "http://localhost:4000/users/624f0cc246391ac7506f1e12"
 					},
 					"response": []
 				},
@@ -81,7 +104,7 @@
 								}
 							}
 						},
-						"url": "http://localhost:4000/users/624c48bb36b3fef60e755621"
+						"url": "http://localhost:4000/users/624f0cc246391ac7506f1e12"
 					},
 					"response": []
 				}
@@ -93,18 +116,25 @@
 				{
 					"name": "Sign in",
 					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": {
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRjMGEzZTMyOWZiYWM5MThiNGFmODMiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MTY2NDQ0fQ.5gModcpKBThgqzZdX_a5XeRtxwYyEfa0wd91ke_yG1s",
+								"key": "Authorization"
+							}
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"m.shautsou\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"password\": \"test\"\n\n}",
+							"raw": "{\n    \"username\": \"user1\",\n    \"password\": \"test\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:4000/sign-up"
+						"url": "http://localhost:4000/sign-in"
 					},
 					"response": []
 				},
@@ -115,14 +145,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"m.shautsou\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"password\": \"test\"\n\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRmMGM0MTQ2MzkxYWM3NTA2ZjFlMTEiLCJ1c2VybmFtZSI6InVzZXIxIiwiZmlyc3ROYW1lIjoiVXNlcjEiLCJsYXN0TmFtZSI6IlVzZXIxIiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6InJlZ3VsYXIiLCJpYXQiOjE2NDkzNDc5NTh9.xI8ovoO_1TYOAJ8GhqsWXesLhbdDhsGJPffDm7qzXog\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:4000/sign-up"
+						"url": "http://localhost:4000/token/validate"
 					},
 					"response": []
 				},
@@ -133,7 +163,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"m.shautsou\",\n    \"firstName\": \"Mikita\",\n    \"lastName\": \"Shautsou\",\n    \"password\": \"test\"\n\n}",
+							"raw": "{\n    \"username\": \"user1\",\n    \"firstName\": \"User1\",\n    \"lastName\": \"User1\",\n    \"password\": \"test\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -150,7 +180,7 @@
 	"auth": {
 		"type": "apikey",
 		"apikey": {
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRjMGEzZTMyOWZiYWM5MThiNGFmODMiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJmaXJzdE5hbWUiOiJNaWtpdGEiLCJsYXN0TmFtZSI6IlNoYXV0c291IiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MTY2NDQ0fQ.5gModcpKBThgqzZdX_a5XeRtxwYyEfa0wd91ke_yG1s",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRmMGM0MTQ2MzkxYWM3NTA2ZjFlMTEiLCJ1c2VybmFtZSI6InVzZXIxIiwiZmlyc3ROYW1lIjoiVXNlcjEiLCJsYXN0TmFtZSI6IlVzZXIxIiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MzQ3NzQxfQ.fVLHgjVryNiciyWp9w9jq48hiOhRGZN9dIhLGFsFpto",
 			"key": "Authorization"
 		}
 	},
