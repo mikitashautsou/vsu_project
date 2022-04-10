@@ -9,13 +9,13 @@ export default createHandler({
   requiredFields: [],
   isUserNeeded: true,
   isDbNeeded: true,
-  funcBody: async ({ user, db, params: { userId, accountId } }) => {
+  funcBody: async ({ user, db, params: { userId, carId } }) => {
     if (user._id !== userId) {
-      requirePermissionAtLeast(user.role, "accountant");
+      requirePermissionAtLeast(user.role, "policeman");
     }
-    await db.collection("accounts").deleteOne({
-      _id: new ObjectId(accountId),
+    await db.collection("cars").deleteOne({
+      _id: new ObjectId(carId),
     });
-    return "account deleted";
+    return "car deleted";
   },
 });

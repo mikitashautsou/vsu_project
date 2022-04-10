@@ -1,0 +1,462 @@
+{
+	"info": {
+		"_postman_id": "a79e2bd1-0dfe-4532-8d53-45ab8956c828",
+		"name": "Drivers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "cars",
+			"item": [
+				{
+					"name": "Create car",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NTA0MTYzYTk0ZTZiOWY5MDc4NmQiLCJwYXNzcG9ydE5vIjoiMTExNSIsImZpcnN0TmFtZSI6IlBvbGljZW1hbiIsImxhc3ROYW1lIjoiU2hhdXRzb3UiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJwYXNzd29yZCI6InRlc3QiLCJyb2xlIjoicG9saWNlbWFuIiwiaWF0IjoxNjQ3NzkyMjYzfQ.f4CMiIy592l_WT69eCFKdWqQ8p-P1gnGJWB17XSrxto",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"Panzerkampfwagen\",\n    \"ownerId\": \"624f0c4146391ac7506f1e11\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4002/users/624f0c4146391ac7506f1e11/cars"
+					},
+					"response": []
+				},
+				{
+					"name": "Get cars",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3Nzk3NjgzfQ.905KiUUJqXr8lcDbyoreev4LmQmK6JV9hHRGuSMEHdY",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "http://localhost:4002/users/624f0c4146391ac7506f1e11/cars"
+					},
+					"response": []
+				},
+				{
+					"name": "Pay tax",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3Nzk3NjgzfQ.905KiUUJqXr8lcDbyoreev4LmQmK6JV9hHRGuSMEHdY",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payerId\": \"624d7752f866a149620536ed\",\n    \"accountId\": \"624d785737fa3b27d81dee9e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/cars/:carNo/taxes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"cars",
+								":carNo",
+								"taxes"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "624d7755f866a149620536ee"
+								},
+								{
+									"key": "carNo",
+									"value": "624d7c68ca60f6cfc53ad89b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update car",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"model\": \"Panzerkampfwagen\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4002/users/624f0c4146391ac7506f1e11/cars/624f10771e98d34c0b3469d7"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete car",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4002/users/624f0c4146391ac7506f1e11/cars/624f10771e98d34c0b3469d7"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trade",
+			"item": [
+				{
+					"name": "Get sales",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NGY1MWY3MTI5ODU4MDA4YWMwMzUiLCJwYXNzcG9ydE5vIjoiMTExNCIsImZpcnN0TmFtZSI6Ik1pa2l0YSIsImxhc3ROYW1lIjoiU2hhdXRzb3UiLCJ1c2VybmFtZSI6Im0uc2hhdXRzb3UiLCJwYXNzd29yZCI6InRlc3QiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3NzkxOTYwfQ.Vlj3olQRNHilscGk-JA9gqJW-9011OwHANL7BeiX9rQ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": "http://localhost:4002/sales"
+					},
+					"response": []
+				},
+				{
+					"name": "Sell car",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3Nzk3NjgzfQ.905KiUUJqXr8lcDbyoreev4LmQmK6JV9hHRGuSMEHdY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"destinationAccountId\": \"624d786137fa3b27d81dee9f\",\n    \"price\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/cars/:carNo/sell",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"cars",
+								":carNo",
+								"sell"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "624d7755f866a149620536ee"
+								},
+								{
+									"key": "carNo",
+									"value": "624d7c68ca60f6cfc53ad89b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buy car",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjUyNzc4OTM5ZDQwM2E1ZGMxODYiLCJwYXNzcG9ydE5vIjoiMTAwMDIiLCJmaXJzdE5hbWUiOiJ1c2VyMiIsImxhc3ROYW1lIjoidXNlcjIiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQzg3RUMwMjkwNEU0NDZEQzlFRjQyRkUzQ0ZCMTlCQUQiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3Nzk3ODc1fQ.JKv6AWCNly7oonzXSI1RuluWmtQpSa1bpGe9-Xw9RgA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"payerId\": \"624d7752f866a149620536ed\",\n    \"accountId\": \"624d785737fa3b27d81dee9e\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4002/sales/624dae70609a8ec49784094a"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Poas",
+			"item": [
+				{
+					"name": "Create POA",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3ODAzMDEyfQ.uHwyD9FxFiA7qXLu0SBB4CWA2d4DkNOwstU-6oHawwc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"targetUserId\": \"6237652778939d403a5dc186\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/poas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"poas"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get POAs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3ODAzMDEyfQ.uHwyD9FxFiA7qXLu0SBB4CWA2d4DkNOwstU-6oHawwc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/poas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"poas"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "624d7752f866a149620536ed"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get POA",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3ODAzMDEyfQ.uHwyD9FxFiA7qXLu0SBB4CWA2d4DkNOwstU-6oHawwc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/poas/:poaId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"poas",
+								":poaId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "624d7752f866a149620536ed"
+								},
+								{
+									"key": "poaId",
+									"value": "624db24def471171015edb04"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update POA",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3ODAzMDEyfQ.uHwyD9FxFiA7qXLu0SBB4CWA2d4DkNOwstU-6oHawwc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"targetUserId\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/poas/:poaId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"poas",
+								":poaId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "624d7752f866a149620536ed"
+								},
+								{
+									"key": "poaId",
+									"value": "624db24def471171015edb04"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete POA Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjM3NjRmYzc4OTM5ZDQwM2E1ZGMxODUiLCJwYXNzcG9ydE5vIjoiMTAwMDEiLCJmaXJzdE5hbWUiOiJ1c2VyMSIsImxhc3ROYW1lIjoidXNlcjEiLCJwYXNzd29yZCI6InRlc3QiLCJiYW5rQWNjb3VudElkIjoiQTJDRDQ0QkQxMDI2NDlEMDgwNDUxOTc2MDhFRkM4QzgiLCJyb2xlIjoiZHJpdmVyIiwiaWF0IjoxNjQ3ODAzMDEyfQ.uHwyD9FxFiA7qXLu0SBB4CWA2d4DkNOwstU-6oHawwc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4002/users/:userId/poas/:poaId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"users",
+								":userId",
+								"poas",
+								":poaId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": null
+								},
+								{
+									"key": "poaId",
+									"value": "624db24def471171015edb04"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRmMGM0MTQ2MzkxYWM3NTA2ZjFlMTEiLCJ1c2VybmFtZSI6InVzZXIxIiwiZmlyc3ROYW1lIjoiVXNlcjEiLCJsYXN0TmFtZSI6IlVzZXIxIiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MzQ3NzQxfQ.fVLHgjVryNiciyWp9w9jq48hiOhRGZN9dIhLGFsFpto",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
