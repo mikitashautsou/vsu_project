@@ -60,5 +60,5 @@ app.delete("/users/:userId/accounts/:accountId", deleteAccount);
 // app.get("/users/:accountId", getUser);
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Bank service listening on port ${PORT}`);
 });

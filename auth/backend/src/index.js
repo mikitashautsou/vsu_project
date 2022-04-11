@@ -54,5 +54,5 @@ app.delete("/users/:userId", deleteUser);
 // app.post("/auth/sign-in", signIn);
 
 app.listen(SERVER_PORT, () => {
-  console.log(`Example app listening on port ${SERVER_PORT}`);
+  console.log(`Auth service listening on port ${SERVER_PORT}`);
 });

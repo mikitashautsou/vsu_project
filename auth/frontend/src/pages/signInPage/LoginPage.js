@@ -29,7 +29,7 @@ export const LoginPage = () => {
     <Form onSubmit={submitHandler}>
       <h1>{TITLE}</h1>
       <Input type="text" placeholder="Username" name="username" handleChange={handleChange} />
-      <Input type="text" placeholder="Password" name="password" handleChange={handleChange} />
+      <Input type="password" placeholder="Password" name="password" handleChange={handleChange} />
       <button type="submit">Submit</button>
       <p>
         Do you want to create a new account? <Link to={REGISTER_ROUTE}>Register</Link>
