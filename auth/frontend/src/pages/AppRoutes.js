@@ -4,10 +4,14 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { RegisterPage } from './signUpPage/RegisterPage';
 import { LoginPage } from './signInPage/LoginPage';
 import { UsersPage } from './usersPage/UsersPage';
+import { AddUserPage } from './addUserPage/AddUserPage';
+import { EditUserPage } from './editUserPage.js/EditUserPage';
 
 export const REGISTER_ROUTE = '/';
 export const LOGIN_ROUTE = '/login';
 export const USERS_ROUTE = '/users';
+export const ADD_USER_ROUTE = '/users/add';
+export const EDIT_USER_ROUTE = '/users/edit';
 
 const ANY_ROUTE = '*';
 
@@ -18,6 +22,8 @@ const publicRoutes = [
 ];
 
 const privateRoutes = [
+  { path: EDIT_USER_ROUTE, component: <EditUserPage /> },
+  { path: ADD_USER_ROUTE, component: <AddUserPage /> },
   { path: USERS_ROUTE, component: <UsersPage /> },
   { path: ANY_ROUTE, component: <Navigate to={USERS_ROUTE} /> },
 ];
