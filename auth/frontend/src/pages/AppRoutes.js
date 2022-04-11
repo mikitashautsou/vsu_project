@@ -1,11 +1,15 @@
-import React, { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import {toast} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import { RegisterPage } from './signUpPage/RegisterPage';
 import { LoginPage } from './signInPage/LoginPage';
 import { UsersPage } from './usersPage/UsersPage';
 import { AddUserPage } from './addUserPage/AddUserPage';
 import { EditUserPage } from './editUserPage.js/EditUserPage';
+import { deleteMessage as deleteAuthMessage } from '../core/reducers/authReducer';
+import { deleteMessage as deleteUsersMessage } from '../core/reducers/usersReducer';
 
 export const REGISTER_ROUTE = '/';
 export const LOGIN_ROUTE = '/login';
@@ -28,7 +32,38 @@ const privateRoutes = [
   { path: ANY_ROUTE, component: <Navigate to={USERS_ROUTE} /> },
 ];
 
+const ERROR_STATUS = 'error'
+const OK_STATUS = 'ok'
+
+toast.configure()
 export const AppRoutes = () => {
+  const dispatch = useDispatch()
+
+  const {status: authStatus, message:authMessage} = useSelector(state=>state.auth)
+  const {status: usersStatus, message:usersMessage} = useSelector(state=>state.users)
+  
+  useEffect(()=>{
+    if(authStatus === ERROR_STATUS && authMessage){
+      toast.error(authMessage, { position: toast.POSITION.BOTTOM_RIGHT })
+      dispatch(deleteAuthMessage())
+    }
+
+    if(usersStatus === ERROR_STATUS && usersMessage){
+      toast.error(usersMessage, { position: toast.POSITION.BOTTOM_RIGHT })
+      dispatch(deleteUsersMessage())
+    }
+
+    if(authStatus === OK_STATUS && authMessage){
+      toast.success(authMessage, { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 3000 })
+      dispatch(deleteAuthMessage())
+    }
+
+    if(usersStatus === OK_STATUS && usersMessage){
+      toast.success(usersMessage, { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 3000 })
+      dispatch(deleteUsersMessage())
+    }
+  })
+
   const token = useSelector((state) => state.auth.token);
 
   const routes = useMemo(() => {
