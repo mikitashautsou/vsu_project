@@ -15,7 +15,7 @@ function* createUserWorker({ payload }) {
     const { token, user } = payload;
 
     const response = yield call(() =>
-      fetch('/users', {
+      fetch(process.env.REACT_APP_BACKEND_URL+'/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ function* createUserWorker({ payload }) {
 function* getUsersWorker({ payload }) {
   try {
     const response = yield call(() =>
-      fetch('/users', {
+      fetch(process.env.REACT_APP_BACKEND_URL+'/users', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ function* getUserWorker({ payload }) {
   try {
     const {_id, token} = payload
     const response = yield call(() =>
-      fetch(`/users/${_id}`, {
+      fetch(process.env.REACT_APP_BACKEND_URL+`/users/${_id}`, {
         headers: {
           'Content-Type': 'application/json',
           authorization: token,
@@ -74,7 +74,7 @@ function* updateUserWorker({ payload }) {
     const { token, user } = payload;
     const { _id, ...data } = user;
     const response = yield call(() =>
-      fetch(`/users/${_id}`, {
+      fetch(process.env.REACT_APP_BACKEND_URL+`/users/${_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -94,7 +94,7 @@ function* deleteUserWorker({ payload }) {
     const { token, user } = payload;
     const { _id, ...data } = user;
     const response = yield call(() =>
-      fetch(`/users/${_id}`, {
+      fetch(process.env.REACT_APP_BACKEND_URL+`/users/${_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

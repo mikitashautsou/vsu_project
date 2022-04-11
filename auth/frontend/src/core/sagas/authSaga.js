@@ -4,7 +4,7 @@ import { actionFailid, signUpSuccess, singInSuccess } from '../reducers/authRedu
 function* signUpWorker({ payload }) {
   try {
     const response = yield call(() =>
-      fetch('/sign-up', {
+      fetch(process.env.REACT_APP_BACKEND_URL+'/sign-up', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ function* signUpWorker({ payload }) {
 function* signInWorker({ payload }) {
   try {
     const response = yield call(() =>
-      fetch('/sign-in', {
+      fetch(process.env.REACT_APP_BACKEND_URL+'/sign-in', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
