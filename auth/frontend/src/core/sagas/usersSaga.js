@@ -12,7 +12,8 @@ const ERROR_STATUS = 'error';
 
 function* createUserWorker({ payload }) {
   try {
-    const { token, fetchPayload } = payload;
+    const { token, user } = payload;
+
     const response = yield call(() =>
       fetch('/users', {
         method: 'POST',
@@ -20,7 +21,7 @@ function* createUserWorker({ payload }) {
           'Content-Type': 'application/json',
           authorization: token,
         },
-        body: JSON.stringify(fetchPayload),
+        body: JSON.stringify(user),
       }).then((response) => response.json())
     );
     yield put(createUserSuccess(response));
@@ -53,8 +54,14 @@ function* getUsersWorker({ payload }) {
 
 function* getUserWorker({ payload }) {
   try {
+    const {_id, token} = payload
     const response = yield call(() =>
-      fetch(`/users/${payload}`).then((response) => response.json())
+      fetch(`/users/${_id}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: token,
+        },
+      }).then((response) => response.json())
     );
     yield put(getUserSuccess(response));
   } catch ({ status, message }) {
@@ -64,13 +71,16 @@ function* getUserWorker({ payload }) {
 
 function* updateUserWorker({ payload }) {
   try {
+    const { token, user } = payload;
+    const { _id, ...data } = user;
     const response = yield call(() =>
-      fetch(`/users/${payload._id}`, {
+      fetch(`/users/${_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          authorization: token,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(data),
       }).then((response) => response.json())
     );
     yield put(updateUserSuccess(response));
@@ -81,17 +91,19 @@ function* updateUserWorker({ payload }) {
 
 function* deleteUserWorker({ payload }) {
   try {
-    const { _id, ...fetchPayload } = payload;
+    const { token, user } = payload;
+    const { _id, ...data } = user;
     const response = yield call(() =>
-      fetch(`/users/${payload._id}`, {
+      fetch(`/users/${_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
+          authorization: token,
         },
-        body: JSON.stringify(fetchPayload),
+        body: JSON.stringify(data),
       }).then((response) => response.json())
     );
-    yield put(deleteUserSuccess(response));
+    yield put(deleteUserSuccess({ response, _id }));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }

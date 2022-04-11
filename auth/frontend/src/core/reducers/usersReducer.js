@@ -60,7 +60,8 @@ export const userSlice = createSlice({
     },
 
     deleteUserSuccess: (state, action) => {
-      state.status = action.payload.status;
+      state.status = action.payload.response.status;
+      state.users = state.users.filter(user=>user._id !== action.payload._id)
       state.isLoading = false;
     },
 
