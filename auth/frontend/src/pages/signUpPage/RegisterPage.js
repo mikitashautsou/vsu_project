@@ -28,15 +28,10 @@ export const RegisterPage = () => {
   return (
     <Form onSubmit={submitHandler}>
       <h1>{TITLE}</h1>
-      <Input
-        type="text"
-        placeholder="User Name"
-        name="username"
-        handleChange={handleChange}
-      />
+      <Input type="text" placeholder="User Name" name="username" handleChange={handleChange} />
       <Input type="text" placeholder="Firstname" name="firstName" handleChange={handleChange} />
       <Input type="text" placeholder="Last Name" name="lastName" handleChange={handleChange} />
-      <Input type="text" placeholder="Password" name="password" handleChange={handleChange} />
+      <Input type="password" placeholder="Password" name="password" handleChange={handleChange} />
       <button type="submit">Submit</button>
       <p>
         Already have an account <Link to={LOGIN_ROUTE}>Log in</Link>
