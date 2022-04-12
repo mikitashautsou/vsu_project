@@ -9,7 +9,7 @@ export default createHandler({
   isUserNeeded: true,
   isDbNeeded: true,
   funcBody: async ({ user, db }) => {
-    requirePermissionAtLeast(user.role, ["accountant"]);
+    requirePermissionAtLeast(user.role, "accountant");
     return await db.collection("accounts").find().toArray();
   },
 });

@@ -8,7 +8,9 @@ export default createFunc({
   funcBody: async ({ _req, db, params: { userId } }) => {
     const license = await db.collection("licenses").findOne({ userId });
     if (!license) {
-      throw new Error("License was not found");
+      return {
+        valid: false,
+      };
     }
     return {
       valid:

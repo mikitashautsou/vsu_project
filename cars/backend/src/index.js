@@ -18,6 +18,7 @@ import createPoa from "./functions/power-of-attorney/create-poa.js";
 import updateCar from "./functions/cars/update-car.js";
 import deleteCar from "./functions/cars/delete-car.js";
 import deleteSale from "./functions/trade/delete-sale.js";
+import checkCarPermission from "./functions/verification/check-user-car-permission.js";
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.post("/users/:userId/cars/:carNo/sell", sellCar);
 app.get("/sales", getSellRequests);
 app.post("/sales/:saleId", buyCar);
 app.delete("/sales/:saleId", deleteSale);
+app.get("/users/:userId/car-permit/:carId", checkCarPermission);
 
 // app.post("/sales/:saleId/buy", buyCar);
 // app.post("/sales/:saleId/verify", verifySalePayment);
