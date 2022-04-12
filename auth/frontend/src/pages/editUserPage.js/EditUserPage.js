@@ -5,6 +5,7 @@ import { Form } from '../../components/Form/Form';
 import { Input } from '../../components/Input/Input';
 import { updateUser } from '../../core/reducers/usersReducer';
 import { USERS_ROUTE } from '../AppRoutes';
+import {Dropdown} from '../../components/Dropdown/Dropdown'
 
 const TITLE = 'Edit User';
 
@@ -27,6 +28,12 @@ export const EditUserPage = () => {
       ...prevState,
       [event.target.name]: event.target.value,
     }));
+  };
+
+  const dropdownItems = ['regular', 'admin', 'manager', 'accountant', 'policeman'];
+  const DROPDOWN_BUTTON_TITLE = 'Role';
+  const setDropdownItem = (value) => {
+    setUser((prevstate) => ({ ...prevstate, role: value }));
   };
 
   return (
@@ -60,12 +67,11 @@ export const EditUserPage = () => {
         name="password"
         handleChange={handleChange}
       />
-      <Input
-        type="text"
-        placeholder="Role"
+      <Dropdown
+        buttonTitle={DROPDOWN_BUTTON_TITLE}
+        dropdownItems={dropdownItems}
+        setItem={setDropdownItem}
         value={user.role}
-        name="role"
-        handleChange={handleChange}
       />
       <button type="submit">Submit</button>
     </Form>

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Dropdown } from '../../components/Dropdown/Dropdown';
 import { Form } from '../../components/Form/Form';
 import { Input } from '../../components/Input/Input';
 import { createUser } from '../../core/reducers/usersReducer';
@@ -19,6 +20,10 @@ export const AddUserPage = () => {
     role: '',
   });
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const token = useSelector((state) => state.auth.token);
 
   const navigate = useNavigate();
@@ -36,6 +41,12 @@ export const AddUserPage = () => {
     }));
   };
 
+  const dropdownItems = ['regular', 'admin', 'manager', 'accountant', 'policeman'];
+  const DROPDOWN_BUTTON_TITLE = 'Role';
+  const setDropdownItem = (value) => {
+    setUser((prevstate) => ({ ...prevstate, role: value }));
+  };
+
   return (
     <Form onSubmit={submitHandler}>
       <h1>{TITLE}</h1>
@@ -43,7 +54,12 @@ export const AddUserPage = () => {
       <Input type="text" placeholder="Firstname" name="firstName" handleChange={handleChange} />
       <Input type="text" placeholder="Last Name" name="lastName" handleChange={handleChange} />
       <Input type="text" placeholder="Password" name="password" handleChange={handleChange} />
-      <Input type="text" placeholder="Role" name="role" handleChange={handleChange} />
+      <Dropdown
+        buttonTitle={DROPDOWN_BUTTON_TITLE}
+        dropdownItems={dropdownItems}
+        setItem={setDropdownItem}
+        value={user.role}
+      />
       <button type="submit">Submit</button>
     </Form>
   );
