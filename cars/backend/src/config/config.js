@@ -1,4 +1,4 @@
-export const DB_NAME = "drivers";
+export const DB_NAME = "cars";
 export const JWT_SECRET = "2022";
 export const SERVER_PORT = 4002;
 export const DB_HOST = "mongodb://127.0.0.1:27017";
@@ -10,5 +10,5 @@ export const DRIVER_SERVICE_BANK_ACCOUNT_ID =
 export const TAX_AMOUNT = 2;
 export const AUTH_SERVICE_URL = "http://localhost:4000";
 
-export const DRIVER_SERVICE_USERNAME = "driver.service";
-export const DRIVER_SERVICE_PASSWORD = "driver.service2022";
+export const CARS_SERVICE_USERNAME = "cars.service";
+export const CARS_SERVICE_PASSWORD = "cars.service2022";

@@ -3,8 +3,8 @@ import { createFunc } from "../../common/create-func.js";
 import { post } from "../../common/http.js";
 import { requirePermissionAtLeast } from "../../common/permissions.js";
 import { BANK_SERVICE_URL, TAX_AMOUNT } from "../../config/config.js";
-import getDriverServiceAccountId from "../system/getDriverServiceAccountId.js";
-import getDriverServiceBankUser from "../system/getDriverServiceBankUser.js";
+import getDriverServiceAccountId from "../system/getCarsServiceAccountId.js";
+import getDriverServiceBankUser from "../system/getCarsServiceBankUser.js";
 import { CAR_STATE } from "./create-car.js";
 
 export default createFunc({
