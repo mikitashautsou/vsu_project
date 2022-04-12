@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "c7bd598f-1c1d-42c5-8b57-13aec4001793",
+		"name": "Drivers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "licenses",
+			"item": [
+				{
+					"name": "Create licese",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:4003/licenses"
+					},
+					"response": []
+				},
+				{
+					"name": "licenses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4003/licenses"
+					},
+					"response": []
+				},
+				{
+					"name": "Update license",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n                \"type\": \"A\",\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4003/licenses/:licenseId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4003",
+							"path": [
+								"licenses",
+								":licenseId"
+							],
+							"variable": [
+								{
+									"key": "licenseId",
+									"value": "6255d24092b22625439c4b96"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete license",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4003/licenses/:licenseId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4003",
+							"path": [
+								"licenses",
+								":licenseId"
+							],
+							"variable": [
+								{
+									"key": "licenseId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pay tax for license",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4003/licenses/:licenseId/taxes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4003",
+							"path": [
+								"licenses",
+								":licenseId",
+								"taxes"
+							],
+							"variable": [
+								{
+									"key": "licenseId",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Revoke license",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4003/licenses/:licenseId/revoke",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4003",
+							"path": [
+								"licenses",
+								":licenseId",
+								"revoke"
+							],
+							"variable": [
+								{
+									"key": "licenseId",
+									"value": "6255d5987593c58a04b58195"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": {
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjRmMGM0MTQ2MzkxYWM3NTA2ZjFlMTEiLCJ1c2VybmFtZSI6InVzZXIxIiwiZmlyc3ROYW1lIjoiVXNlcjEiLCJsYXN0TmFtZSI6IlVzZXIxIiwicGFzc3dvcmQiOiJ0ZXN0Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQ5MzQ3NzQxfQ.fVLHgjVryNiciyWp9w9jq48hiOhRGZN9dIhLGFsFpto",
+			"key": "Authorization"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
