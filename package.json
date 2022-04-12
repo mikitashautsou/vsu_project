@@ -9,13 +9,13 @@
     "install:auth:backend": "cd auth/backend && npm install",
     "install:auth:frontend": "cd auth/frontend && npm install",
     "install:bank": "cd bank/backend && npm install",
-    "install:drivers": "cd drivers/backend && npm install",
-    "start": "npm run start:auth & npm run start:bank & npm run start:drivers",
+    "install:cars": "cd cars/backend && npm install",
+    "start": "npm run start:auth & npm run start:bank & npm run start:cars",
     "start:auth": "npm run start:auth:backend & npm run start:auth:frontend",
     "start:auth:backend": "cd auth/backend && npm run start",
     "start:auth:frontend": "cd auth/frontend && npm run start",
     "start:bank": "cd bank/backend && npm run start",
-    "start:drivers": "cd drivers/backend && npm run start"
+    "start:cars": "cd cars/backend && npm run start"
   },
   "repository": {
     "type": "git",
