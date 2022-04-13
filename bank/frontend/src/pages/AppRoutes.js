@@ -5,14 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AccountsPage } from './accountsPage/AccountsPage';
 import { BankHomePage } from './bankHomePage/BankHomePage';
-import { BankPage } from './bankPage/BankPage';
+import { SetTokenPage } from './setTokenPage/SetTokenPage';
 import { TransactionsPage } from './transactionsPage/TransactionsPage';
 import { TransferPage } from './transferPage/TransferPage';
 import { UserAccountsPage } from './userAccountsPage/UserAccountsPage';
 import {deleteMessageWithStatus as deleteAccountsMessageWithStatus} from '../core/reducers/accountsReducer'
 import {deleteMessageWithStatus as deleteTransactionsMessageWithStatus} from '../core/reducers/transactionsReducer'
 
-export const BANK_ROUTE = '/bank';
+export const SET_TOKEN_ROUTE = '/set-token/:token';
 export const BANK_HOME_ROUTE = '/bank/home';
 export const ACCOUNTS_ROUTE = '/bank/accounts';
 export const USER_ACCOUNTS_ROUTE = '/bank/accounts/userAccounts';
@@ -22,8 +22,8 @@ export const TRANSFER_ROUTE = '/bank/transfer';
 const ANY_ROUTE = '*';
 
 const publicRoutes = [
-  { path: BANK_ROUTE, component: <BankPage /> },
-  { path: ANY_ROUTE, component: <Navigate to={BANK_ROUTE} /> },
+  { path: SET_TOKEN_ROUTE, component: <SetTokenPage /> },
+  { path: ANY_ROUTE, component: <Navigate to={SET_TOKEN_ROUTE} /> },
 ];
 
 const privateRoutes = [

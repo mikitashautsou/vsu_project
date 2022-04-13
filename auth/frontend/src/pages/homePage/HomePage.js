@@ -6,7 +6,6 @@ import { Button } from './styles/styled-button';
 import { Container } from './styles/styled-container';
 
 export const HomePage = () => {
-  const { token, user } = useSelector((state) => state.auth);
 
   const navigate = useNavigate();
 
@@ -14,13 +13,13 @@ export const HomePage = () => {
     navigate(USERS_ROUTE);
   };
 
-  const BANK_URL = 'http://localhost:3000/bank?token=' + token + '&user=' + JSON.stringify(user);
+  const MAIN_MENU_URL = 'http://localhost:4001'
 
   return (
     <Container>
       <Button onClick={handleUsers}>Users</Button>
-      <a href={BANK_URL}>
-        <Button>Bank</Button>
+      <a href={MAIN_MENU_URL}>
+        <Button>Main menu</Button>
       </a>
     </Container>
   );

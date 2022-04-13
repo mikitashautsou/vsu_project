@@ -3,17 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { RegisterPage } from './signUpPage/RegisterPage';
-import { LoginPage } from './signInPage/LoginPage';
 import { UsersPage } from './usersPage/UsersPage';
 import { AddUserPage } from './addUserPage/AddUserPage';
 import { EditUserPage } from './editUserPage.js/EditUserPage';
 import { deleteMessage as deleteAuthMessage } from '../core/reducers/authReducer';
 import { deleteMessage as deleteUsersMessage } from '../core/reducers/usersReducer';
 import { HomePage } from './homePage/HomePage';
+import { SetTokenPage } from './setTokenPage/SetTokenPage';
 
-export const REGISTER_ROUTE = '/';
-export const LOGIN_ROUTE = '/login';
+export const SET_TOKEN_ROUTE = '/set-token/:token'
 export const USERS_ROUTE = '/users';
 export const ADD_USER_ROUTE = '/users/add';
 export const EDIT_USER_ROUTE = '/users/edit';
@@ -22,9 +20,8 @@ export const HOME_ROUTE = '/home';
 const ANY_ROUTE = '*';
 
 const publicRoutes = [
-  { path: REGISTER_ROUTE, component: <RegisterPage /> },
-  { path: LOGIN_ROUTE, component: <LoginPage /> },
-  { path: ANY_ROUTE, component: <Navigate to={LOGIN_ROUTE} /> },
+  {path: SET_TOKEN_ROUTE, component: <SetTokenPage />},
+  { path: ANY_ROUTE, component: <Navigate to={SET_TOKEN_ROUTE} /> },
 ];
 
 const privateRoutes = [

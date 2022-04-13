@@ -43,7 +43,7 @@ export const authSlice = createSlice({
     },
 
     actionFailid: (state, action) => {
-      console.log(action.payload)
+      console.log(action.payload);
       state.status = action.payload.status;
       state.message = action.payload.message;
       state.isLoading = false;
@@ -53,9 +53,22 @@ export const authSlice = createSlice({
       state.status = '';
       state.message = '';
     },
+
+    setTokenAndUser: (state, action) => {
+      state.token = action.payload.token;
+      state.user = action.payload.user;
+    },
   },
 });
 
-export const { signUp, signUpSuccess, signIn, singInSuccess, actionFailid, deleteMessage } = authSlice.actions;
+export const {
+  signUp,
+  signUpSuccess,
+  signIn,
+  singInSuccess,
+  actionFailid,
+  deleteMessage,
+  setTokenAndUser,
+} = authSlice.actions;
 
 export default authSlice.reducer;

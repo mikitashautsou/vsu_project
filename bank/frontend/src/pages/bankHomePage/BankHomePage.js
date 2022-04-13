@@ -11,9 +11,14 @@ export const BankHomePage = () => {
     navigate(ACCOUNTS_ROUTE);
   };
 
+  const MAIN_MENU_URL = 'http://localhost:4001';
+
   return (
     <Container>
       <Button onClick={handleAccounts}>Accounts</Button>
+      <a href={MAIN_MENU_URL}>
+        <Button>Main menu</Button>
+      </a>
     </Container>
   );
 };
