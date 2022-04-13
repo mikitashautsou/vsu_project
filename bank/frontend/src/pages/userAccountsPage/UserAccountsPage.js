@@ -15,7 +15,7 @@ export const UserAccountsPage = () => {
 
   useEffect(() => {
     dispatch(getUserAccounts({ token, _id }));
-  });
+  },[]);
 
   const handleCreateAccount = () => {
     dispatch(createAccount({ _id, token }));

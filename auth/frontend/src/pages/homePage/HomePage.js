@@ -14,13 +14,28 @@ export const HomePage = () => {
     navigate(USERS_ROUTE);
   };
 
-  const BANK_URL = 'http://localhost:3000/bank?token=' + token + '&user=' + JSON.stringify(user);
+  const BANK_URL =
+    process.env.REACT_APP_BANK_FRONTEND_URL +
+    '/bank?token=' +
+    token +
+    '&user=' +
+    JSON.stringify(user);
+
+  const DRIVERS_URL =
+    process.env.REACT_APP_DRIVERS_FRONTEND_URL +
+    '/drivers?token=' +
+    token +
+    '&user=' +
+    JSON.stringify(user);
 
   return (
     <Container>
       <Button onClick={handleUsers}>Users</Button>
       <a href={BANK_URL}>
         <Button>Bank</Button>
+      </a>
+      <a href={DRIVERS_URL}>
+        <Button>Drivers</Button>
       </a>
     </Container>
   );
