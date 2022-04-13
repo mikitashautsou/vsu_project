@@ -77,6 +77,7 @@ const SalesPage = () => {
         data={sales}
         rowActions={[
           {
+            renderIf: (sale) => sale.ownerId !== state.user._id,
             title: "Buy car",
             perform: async (sale) => {
               navigate(`/sales/${sale._id}`);

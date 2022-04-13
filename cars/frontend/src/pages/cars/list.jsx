@@ -46,6 +46,7 @@ const CarsPage = () => {
         data={cars}
         actions={[
           {
+            requireElevatedRoles: true,
             title: "New car",
             perform: () => navigate(`/cars/new`),
           },
@@ -53,11 +54,13 @@ const CarsPage = () => {
         rowActions={[
           {
             title: "Edit",
+            requireElevatedRoles: true,
+
             perform: (car) => navigate(`/cars/${car._id}`),
           },
           {
             title: "Pay tax",
-            renderIf: (car) => car.state === 'new',
+            renderIf: (car) => car.state === "new",
             perform: (car) => navigate(`/cars/${car._id}/pay-tax`),
           },
           {
@@ -67,6 +70,7 @@ const CarsPage = () => {
 
           {
             title: "Delete",
+            requireElevatedRoles: true,
             perform: async (car) => {
               await del({ url: `/cars/${car._id}`, token: state.token });
               const { response: cars } = await get({

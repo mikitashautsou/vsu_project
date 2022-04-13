@@ -1,4 +1,7 @@
+import { useContext } from "react";
+import { StateContext } from "../../state/state.context";
 const Table = ({ columns, data = [], actions = [], rowActions }) => {
+  const { user } = useContext(StateContext);
   return (
     <>
       <table>
@@ -15,6 +18,10 @@ const Table = ({ columns, data = [], actions = [], rowActions }) => {
               ))}
               {rowActions.length > 0
                 ? rowActions
+                    .filter(
+                      (ra) =>
+                        !ra.requireElevatedRoles || user.role !== "regular"
+                    )
                     .filter((a) => !a.renderIf || a.renderIf(row))
                     .map((action) => (
                       <td>
@@ -29,9 +36,11 @@ const Table = ({ columns, data = [], actions = [], rowActions }) => {
         </tbody>
       </table>
       <div>
-        {actions.map((a) => (
-          <button onClick={() => a.perform()}>{a.title}</button>
-        ))}
+        {actions
+          .filter((ra) => !ra.requireElevatedRoles || user.role !== "regular")
+          .map((a) => (
+            <button onClick={() => a.perform()}>{a.title}</button>
+          ))}
       </div>
     </>
   );

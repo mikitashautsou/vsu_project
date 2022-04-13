@@ -23,6 +23,7 @@ export const AccountsPage = () => {
 
   const token = useSelector((state) => state.auth.token);
   const _id = useSelector((state) => state.auth.user._id);
+  const role = useSelector((state) => state.auth.user.role);
 
   const allAccounts = useSelector((state) => state.accounts.allAccounts);
 
@@ -30,9 +31,9 @@ export const AccountsPage = () => {
     dispatch(getAllAccounts(token));
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllAccounts(token));
-  },[])
+  }, []);
 
   const navigate = useNavigate();
   const handleMyAccounts = () => {
@@ -68,8 +69,12 @@ export const AccountsPage = () => {
         <Td>{item.userId}</Td>
         <Td>{item.balance}</Td>
         <Td>
-          <ButtonSuccess onClick={() => handleDeposit(item._id)}>Deposit</ButtonSuccess>
-          <ButtonEdit onClick={() => handleEditBalance(item._id)}>Edit balance</ButtonEdit>
+          {role !== 'regular' && role !== 'policeman' && (
+            <ButtonSuccess onClick={() => handleDeposit(item._id)}>Deposit</ButtonSuccess>
+          )}
+          {role !== 'regular' && role !== 'policeman' && (
+            <ButtonEdit onClick={() => handleEditBalance(item._id)}>Edit balance</ButtonEdit>
+          )}
           <ButtonSuccess onClick={() => handleTransactions(item._id)}>Transactions</ButtonSuccess>
           <ButtonDelete onClick={() => handleDeleteAccount(item._id)}>Delete account</ButtonDelete>
         </Td>

@@ -63,11 +63,19 @@ const CarEditPage = () => {
           options: [
             {
               title: "new",
-              value: "NEW",
+              value: "new",
             },
             {
               title: "Stolen",
-              value: "STOLEN",
+              value: "stolen",
+            },
+            {
+              title: "OK",
+              value: "tax-paid",
+            },
+            {
+              title: "On sale",
+              value: "on-sale",
             },
           ],
         },

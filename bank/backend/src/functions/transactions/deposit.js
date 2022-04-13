@@ -19,7 +19,6 @@ export default createHandler({
 
     const account = await db.collection("accounts").findOne({
       _id: new ObjectId(accountId),
-      userId,
     });
     if (!account) {
       throw new Error("Account was not found");
@@ -28,7 +27,6 @@ export default createHandler({
     await db.collection("accounts").updateOne(
       {
         _id: new ObjectId(accountId),
-        userId,
       },
       {
         $set: {
