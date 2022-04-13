@@ -4,7 +4,9 @@ import {
   createAccountSuccess,
   deleteAccountSuccess,
   depositSuccess,
+  getAllAccounts,
   getAllAccountsSuccess,
+  getUserAccounts,
   getUserAccountsSuccess,
   updateAccountSuccess,
 } from '../reducers/accountsReducer';
@@ -22,6 +24,7 @@ function* createAccountWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(createAccountSuccess(response));
+    yield put(getUserAccounts(payload));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }
@@ -74,6 +77,7 @@ function* updateAccountWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(updateAccountSuccess(response));
+    yield put(getAllAccounts(token));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }
@@ -93,6 +97,7 @@ function* depositWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(depositSuccess(response));
+    yield put(getAllAccounts(token));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }
@@ -111,6 +116,7 @@ function* deleteAccountWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(deleteAccountSuccess(response));
+    yield put(getAllAccounts(token));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }

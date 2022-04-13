@@ -73,6 +73,11 @@ const licensesSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     },
+
+    deleteMessageWithStatus: (state) => {
+      state.status = '';
+      state.action = '';
+    },
   },
 });
 
@@ -90,6 +95,7 @@ export const {
   revokeLicense,
   revokeLicenseSuccess,
   actionFailid,
+  deleteMessageWithStatus,
 } = licensesSlice.actions;
 
 export default licensesSlice.reducer;

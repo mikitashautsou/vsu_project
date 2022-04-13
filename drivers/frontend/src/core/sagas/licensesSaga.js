@@ -3,6 +3,7 @@ import {
   actionFailid,
   createLicenseSuccess,
   deleteLicenseSuccess,
+  getLicenses,
   getLicensesSuccess,
   revokeLicenseSuccess,
   updateLicenseSuccess,
@@ -57,6 +58,7 @@ function* updateLicenseWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(updateLicenseSuccess(response));
+    yield put(getLicenses(token));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }
@@ -76,6 +78,7 @@ function* deleteLicenseWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(deleteLicenseSuccess(response));
+    yield put(getLicenses(token));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }
@@ -102,6 +105,7 @@ function* revokeLicenseWorker({ payload }) {
       }).then((response) => response.json())
     );
     yield put(revokeLicenseSuccess(response));
+    yield put(getLicenses(token));
   } catch ({ status, message }) {
     yield put(actionFailid({ status, message }));
   }

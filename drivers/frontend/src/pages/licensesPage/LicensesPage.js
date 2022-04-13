@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   deleteLicense,
   getLicenses,
@@ -9,7 +10,14 @@ import {
 } from '../../core/reducers/licensesReducer';
 import { Table } from '../../components/Table/Table';
 import { Td } from '../../components/Table/styles/styled-table';
-import { ButtonAdd, ButtonDelete, ButtonEdit, ButtonSuccess } from '../../styles/styled-buttons';
+import {
+  Button,
+  ButtonAdd,
+  ButtonDelete,
+  ButtonEdit,
+  ButtonSuccess,
+} from '../../styles/styled-buttons';
+import { CREATE_LICENSE_PAGE } from '../AppRoutes';
 
 export const LicensesPage = () => {
   const dispatch = useDispatch();
@@ -17,6 +25,11 @@ export const LicensesPage = () => {
   const token = useSelector((state) => state.auth.token);
 
   const licenses = useSelector((state) => state.licenses.licenses);
+
+  const navigate = useNavigate();
+  const handleCreateLicense = () => {
+    navigate(CREATE_LICENSE_PAGE);
+  };
 
   const handleUpdateLicense = (licenseId) => {
     const type = prompt('Enter a new type');
@@ -65,9 +78,14 @@ export const LicensesPage = () => {
 
   const tableHead = ['licenseId', 'Type', 'userId', 'Revoked', 'Actions'];
 
+  const HOME_MENU_URL = 'http://localhost:4001';
+
   return (
     <>
-      <ButtonAdd>Create License</ButtonAdd>
+      <a href={HOME_MENU_URL}>
+        <Button>Home menu</Button>
+      </a>
+      <ButtonAdd onClick={handleCreateLicense}>Create License</ButtonAdd>
       {tableBody.length !== 0 ? (
         <Table tableBody={tableBody} tableHead={tableHead} />
       ) : (

@@ -45,13 +45,19 @@ export const AccountsPage = () => {
   };
 
   const handleDeposit = (accountId) => {
-    const amount = Number(prompt('How much is being replenished?'));
-    dispatch(deposit({ token, userId: _id, accountId, amount }));
+    const stringAmount = prompt('How much is being replenished?');
+    if (stringAmount) {
+      const amount = Number(stringAmount);
+      dispatch(deposit({ token, userId: _id, accountId, amount }));
+    }
   };
 
   const handleEditBalance = (accountId) => {
-    const balance = Number(prompt('What amount are we setting?'));
-    dispatch(updateAccount({ token, userId: _id, accountId, balance }));
+    const stringBalance = prompt('What amount are we setting?');
+    if (stringBalance) {
+      const balance = Number(stringBalance);
+      dispatch(updateAccount({ token, userId: _id, accountId, balance }));
+    }
   };
 
   const handleTransactions = (accountId) => {
