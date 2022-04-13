@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { post } from "../../api/post";
 import { Form } from "../../components/Form/Form";
 import { Input } from "../../components/Input/Input";
+import { StateContext } from "../../state/state.context";
 
 export const SignUpPage = () => {
-  const nav = useNavigate()
+  const nav = useNavigate();
+  const state = useContext(StateContext);
   const [user, setUser] = useState({
     username: "",
     firstName: "",
@@ -22,8 +24,12 @@ export const SignUpPage = () => {
 
   const handleSubmit = async () => {
     const response = await post("/sign-up", user);
-    if (response.status === 'ok') {
-      
+    if (response.status === "ok") {
+      const response = await post("/sign-in", user);
+      if (response.token && response.user) {
+        state.authorize(response.token, response.user);
+        nav("/menu");
+      }
     }
   };
 

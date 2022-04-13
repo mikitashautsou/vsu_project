@@ -57,11 +57,12 @@ const CarsPage = () => {
           },
           {
             title: "Pay tax",
-            perform: (car) => console.log(car),
+            renderIf: (car) => car.state === 'new',
+            perform: (car) => navigate(`/cars/${car._id}/pay-tax`),
           },
           {
             title: "Sell",
-            perform: (car) => console.log(car),
+            perform: (car) => navigate(`/cars/${car._id}/sell`),
           },
 
           {

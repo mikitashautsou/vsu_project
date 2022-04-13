@@ -1,4 +1,4 @@
-const Table = ({ columns, data = [], actions, rowActions }) => {
+const Table = ({ columns, data = [], actions = [], rowActions }) => {
   return (
     <>
       <table>
@@ -14,13 +14,15 @@ const Table = ({ columns, data = [], actions, rowActions }) => {
                 <td>{!c.renderer ? row[c.key] : c.renderer(row[c.key])}</td>
               ))}
               {rowActions.length > 0
-                ? rowActions.map((action) => (
-                    <td>
-                      <button onClick={() => action.perform(row)}>
-                        {action.title}
-                      </button>
-                    </td>
-                  ))
+                ? rowActions
+                    .filter((a) => !a.renderIf || a.renderIf(row))
+                    .map((action) => (
+                      <td>
+                        <button onClick={() => action.perform(row)}>
+                          {action.title}
+                        </button>
+                      </td>
+                    ))
                 : null}
             </tr>
           ))}

@@ -41,7 +41,7 @@ app.get("/cars/:carId", getCar);
 app.patch("/cars/:carId", updateCar);
 app.delete("/cars/:carId", deleteCar);
 
-app.post("/users/:userId/cars/:carNo/taxes", payTax);
+app.post("/cars/:carNo/taxes", payTax);
 
 // app.post("/cars/:carNo/poa", createPowerOfAttorney);
 // app.get("/cars/:carNo/poa", getPoas);
@@ -58,10 +58,11 @@ app.delete("/poas/:poaId", deletePoa);
 // app.post("/cars/:carNo/taxes", payTax);
 // app.post("/cars/:carNo/taxes/verify", verifyTaxPayment);
 
-app.post("/users/:userId/cars/:carNo/sell", sellCar);
+app.post("/cars/:carNo/sell", sellCar);
 app.get("/sales", getSellRequests);
 app.post("/sales/:saleId", buyCar);
 app.delete("/sales/:saleId", deleteSale);
+
 app.get("/users/:userId/car-permit/:carId", checkCarPermission);
 
 // app.post("/sales/:saleId/buy", buyCar);

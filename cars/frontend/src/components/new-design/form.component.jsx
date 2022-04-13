@@ -25,6 +25,21 @@ const Input = ({
         <br />
       </>
     );
+  } else if (type === "number") {
+    return (
+      <>
+        <label for={`${key}`}>{title}:</label>
+        <input
+          required={true}
+          onChange={handleChange}
+          type='number'
+          id={`${key}`}
+          name={key}
+          value={state[key]}
+        ></input>
+        <br />
+      </>
+    );
   } else if (type === "select") {
     return (
       <>
@@ -94,7 +109,7 @@ const Form = ({
 
       <button
         onClick={(e) => {
-            e.preventDefault()
+          e.preventDefault();
           handleSubmit(state);
         }}
       >

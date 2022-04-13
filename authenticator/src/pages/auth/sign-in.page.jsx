@@ -22,7 +22,6 @@ export const SignInPage = () => {
 
   const handleSubmit = async () => {
     const response = await post("/sign-in", user);
-    console.log(response);
     if (response.token && response.user) {
       state.authorize(response.token, response.user);
       nav("/menu");
