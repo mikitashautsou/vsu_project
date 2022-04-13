@@ -42,6 +42,7 @@ const STYLES = {
   },
   unavailable: {
     backgroundColor: "red",
+    color: "black",
   },
 };
 
