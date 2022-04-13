@@ -1,0 +1,44 @@
+﻿<cshtml>
+    <head>
+        <title>
+            List of Fines
+        </title>
+    </head>
+    <body>
+        <h1>
+            List of Fines
+        </h1>
+        <a href="~/Home/Create">
+            <input type="button" value="Create" />
+        </a>    
+        <table border="1">
+            <tr>
+                <th>Description</th>
+                <th>Fine amount</th>
+                <th>Status</th>
+            </tr>
+            @{
+                foreach (var fine in ViewBag.Fines)
+                {
+                    <tr>
+                        <td>@fine.Description</td>
+                        <td>@fine.FineAmount</td>
+                        <td>@fine.Status</td>
+                        <td>
+                            <form action="Edit" method="get">
+                                <input type="hidden" value="@fine.Id" name="id" />
+                                <input type="submit" value="Edit"/>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="Delete" method="get">
+                                <input type="hidden" value="@fine.Id" name="id" />
+                                <input type="submit" value="Delete" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </body>
+</cshtml>

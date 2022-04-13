@@ -1,0 +1,26 @@
+﻿<cshtml>
+    <head>
+        <title>
+            Edit
+        </title>
+    </head>
+    <body>
+        <h1>
+            Edit
+        </h1>
+        <form method="post">
+            <input type="hidden" name="id" value="@ViewBag.EditFine.Id" />
+            <p>Description</p>
+            <input type="text" name="description" value="@ViewBag.EditFIne.Description" />
+            <p>Fine amount</p>
+            <input type="number" name="fine_amount" value="@ViewBag.EditFine.FineAmount" />
+            <p>Status</p>
+            <select name="status">
+                <option value="Paid">Paid</option>
+                <option value="NotPaid">Not Paid</option>
+            </select>
+            <br />
+            <input type="submit"/>
+        </form>
+    </body>
+</cshtml>

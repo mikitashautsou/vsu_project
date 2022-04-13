@@ -1,0 +1,26 @@
+﻿<cshtml>
+    <head>
+        <title>
+            Create
+        </title>
+    </head>
+    <body>
+        <h1>
+            Create
+        </h1>
+        <form method="post">
+            <input type="hidden" name="id"/>
+            <p>Description</p>
+            <input type="text" name="description" />
+            <p>Fine amount</p>
+            <input type="text" name="fine_amount"/>
+            <p>Status</p>
+            <select name="status">
+                <option value="Paid">Paid</option>
+                <option value="NotPaid">Not Paid</option>
+            </select>
+            <br />
+            <input type="submit"/>
+        </form>
+    </body>
+</cshtml>
