@@ -4,20 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install": "npm run install:auth & npm run install:bank & npm run install:drivers & npm run install:drivers",
-    "install:auth": "npm run install:auth:backend & npm run install:auth:frontend",
-    "install:auth:backend": "cd auth/backend && npm install",
-    "install:auth:frontend": "cd auth/frontend && npm install",
-    "install:bank": "cd bank/backend && npm install",
-    "install:cars": "cd cars/backend && npm install",
-    "install:drivers": "cd drivers/backend && npm run start",
-    "start": "npm run start:auth & npm run start:bank & npm run start:cars & npm run start:drivers",
-    "start:auth": "npm run start:auth:backend & npm run start:auth:frontend",
+    "start:auth": "npm run start:auth:backend &  npm run start:auth:frontend",
     "start:auth:backend": "cd auth/backend && npm run start",
-    "start:auth:frontend": "cd auth/frontend && npm run start",
-    "start:bank": "cd bank/backend && npm run start",
-    "start:cars": "cd cars/backend && npm run start",
-    "start:drivers": "cd drivers/backend && npm run start"
+    "start:auth:frontend": "cd authenticator && npm run start",
+    "start:bank": "npm run start:bank:backend & npm run start:bank:frontend",
+    "start:bank:backend": "cd bank/backend && npm run start",
+    "start:bank:frontend": "cd bank/frontend && npm run start"
   },
   "repository": {
     "type": "git",
