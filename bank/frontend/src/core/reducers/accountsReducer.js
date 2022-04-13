@@ -77,6 +77,11 @@ const accountsSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     },
+
+    deleteMessageWithStatus: (state) => {
+      state.status = '';
+      state.message = '';
+    },
   },
 });
 
@@ -94,6 +99,7 @@ export const {
   deleteAccount,
   deleteAccountSuccess,
   actionFailid,
+  deleteMessageWithStatus,
 } = accountsSlice.actions;
 
 export default accountsSlice.reducer;

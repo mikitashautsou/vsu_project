@@ -47,6 +47,11 @@ const transactionsSlice = createSlice({
       state.message = action.payload.message;
       state.isLoading = false;
     },
+
+    deleteMessageWithStatus: (state) => {
+      state.status = '';
+      state.message = '';
+    },
   },
 });
 
@@ -58,6 +63,7 @@ export const {
   transfer,
   transferSuccess,
   actionFailid,
+  deleteMessageWithStatus,
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
