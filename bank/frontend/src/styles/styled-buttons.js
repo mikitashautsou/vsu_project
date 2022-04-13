@@ -2,13 +2,13 @@ import styled from 'styled-components';
 
 export const Button = styled.button`
   position: fixed;
-  left: 100px;
+  left: 30px;
   min-width: 50px;
   min-height: 40px;
   background-color: #24474b;
   color: white;
   border-color: #24474b;
-  font-size: 1.5em;
+  font-size: 1em;
   border-radius: 3px;
   margin-left: 50px;
 `;

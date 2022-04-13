@@ -11,12 +11,15 @@ function* getAllTransactionsWorker({ payload }) {
     const { token, userId, accountId } = payload;
 
     const response = yield call(() =>
-      fetch('http://localhost:4001' + `/users/${userId}/accounts/${accountId}/transactions`, {
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: token,
-        },
-      }).then((response) => response.json())
+      fetch(
+        process.env.REACT_APP_BACKEND_URL + `/users/${userId}/accounts/${accountId}/transactions`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            authorization: token,
+          },
+        }
+      ).then((response) => response.json())
     );
     yield put(getAllTransactionsSuccess(response));
   } catch ({ status, message }) {
@@ -30,7 +33,7 @@ function* getTransactionWorker({ payload }) {
 
     const response = yield call(() =>
       fetch(
-        'http://localhost:4001' +
+        process.env.REACT_APP_BACKEND_URL +
           `/users/${userId}/accounts/${accountId}/transactions/${transactionId}`,
         {
           headers: {
@@ -58,15 +61,14 @@ function* transferWorker({ payload }) {
     const body = { destinationAccountId, amount: Number(amount) };
 
     const response = yield call(() =>
-      fetch('http://localhost:4001' + `/users/${userId}/accounts/${accountId}/transfer`, {
+      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${userId}/accounts/${accountId}/transfer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           authorization: token,
         },
         body: JSON.stringify(body),
-      })
-        .then((response) => response.json())
+      }).then((response) => response.json())
     );
     yield put(transferSuccess(response));
   } catch ({ status, message }) {
