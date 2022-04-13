@@ -1,24 +1,24 @@
 import { ObjectId } from "mongodb";
-import { createFunc as createHandler } from "../../common/create-func.js";
+import { createFunc } from "../../common/create-func.js";
+import { connectToDB } from "../../common/db.js";
+import { decodeJWT } from "../../common/jwt.js";
 import {
+  hasRoleAtLeast,
   requirePermissionAtLeast,
-  requirePermissions,
 } from "../../common/permissions.js";
+import { validateBody } from "../../common/validation.js";
 
-export default createHandler({
+export default createFunc({
   requiredFields: [],
-  isUserNeeded: true,
   isDbNeeded: true,
+  isUserNeeded: true,
   funcBody: async ({ user, db, params: { carId } }) => {
     const car = await db.collection("cars").findOne({
       _id: new ObjectId(carId),
     });
-    if (user._id !== car.ownerId) {
+    if (car.ownerId !== user._id) {
       requirePermissionAtLeast(user.role, "policeman");
     }
-    await db.collection("cars").deleteOne({
-      _id: new ObjectId(carId),
-    });
-    return "car deleted";
+    return car;
   },
 });

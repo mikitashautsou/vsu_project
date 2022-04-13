@@ -1,8 +1,8 @@
 import { BACKEND_URL } from "../config";
 
-export const post = async ({ domain = BACKEND_URL, url, token, body }) =>
+export const patch = async ({ domain = BACKEND_URL, url, token, body }) =>
   fetch(`${domain}${url}`, {
-    method: "POST",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       authorization: token,

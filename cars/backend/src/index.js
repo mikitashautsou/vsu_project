@@ -19,6 +19,7 @@ import updateCar from "./functions/cars/update-car.js";
 import deleteCar from "./functions/cars/delete-car.js";
 import deleteSale from "./functions/trade/delete-sale.js";
 import checkCarPermission from "./functions/verification/check-user-car-permission.js";
+import getCar from "./functions/cars/get-car.js";
 
 const app = express();
 
@@ -34,10 +35,11 @@ app.use(cors());
 // app.patch("/users/:accountId", updateUser);
 // app.delete("/users/:accountId", deleteUser);
 
-app.post("/users/:userId/cars", createCar);
-app.get("/users/:userId/cars", getCars);
-app.patch("/users/:userId/cars/:carId", updateCar);
-app.delete("/users/:userId/cars/:carId", deleteCar);
+app.post("/cars", createCar);
+app.get("/cars", getCars);
+app.get("/cars/:carId", getCar);
+app.patch("/cars/:carId", updateCar);
+app.delete("/cars/:carId", deleteCar);
 
 app.post("/users/:userId/cars/:carNo/taxes", payTax);
 
