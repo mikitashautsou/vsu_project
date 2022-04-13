@@ -12,18 +12,13 @@ export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
   requiredFields: ["model", "ownerId"],
-  funcBody: async ({
-    user,
-    body: { model },
-    db,
-    params: { userId: ownerId },
-  }) => {
+  funcBody: async ({ user, body: { model }, db }) => {
     requirePermissionAtLeast(user.role, "policeman");
 
     await db.collection("cars").insertOne({
       model,
       state: CAR_STATE.NEW,
-      ownerId,
+      ownerId: user._id,
     });
   },
 });

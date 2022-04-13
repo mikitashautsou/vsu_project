@@ -6,7 +6,7 @@ export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
   requiredFields: [],
-  funcBody: async ({ user, body, db, params: { carId } }) => {
+  funcBody: async ({ user, body: { _id, ...body }, db, params: { carId } }) => {
     requirePermissionAtLeast(user.role, "policeman");
 
     await db.collection("cars").updateOne(

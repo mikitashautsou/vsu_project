@@ -1,7 +1,7 @@
 import { BACKEND_URL } from "../config";
 
-export const get = async ({ url, token }) =>
-  fetch(`${BACKEND_URL}${url}`, {
+export const get = async ({ domain = BACKEND_URL, url, token }) =>
+  fetch(`${domain}${url}`, {
     method: "get",
     headers: {
       "Content-Type": "application/json",

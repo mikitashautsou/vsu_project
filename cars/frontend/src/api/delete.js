@@ -1,11 +1,10 @@
 import { BACKEND_URL } from "../config";
 
-export const post = async ({ domain = BACKEND_URL, url, token, body }) =>
+export const del = async ({ domain = BACKEND_URL, url, token, body }) =>
   fetch(`${domain}${url}`, {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       authorization: token,
     },
-    body: JSON.stringify(body),
   }).then((res) => res.json());

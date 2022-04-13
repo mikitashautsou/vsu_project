@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import SetToken from "./pages/auth/set-token";
+import CarEditPage from "./pages/cars/edit";
+import CarsPage from "./pages/cars/list";
 import { StateContextProvider } from "./state/state.context";
 // auth
 //   auth-backend: 4000
@@ -22,8 +24,9 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/cars" element={}
-        {/* <Route path="/" element={<SetToken />} /> */}
+        <Route path="/cars" element={<CarsPage />} />
+        <Route path="/cars/:carId" element={<CarEditPage />} />
+        <Route path="/" element={<SetToken />} />
         {/* <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route
