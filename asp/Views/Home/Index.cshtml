@@ -25,13 +25,13 @@
                         <td>@fine.FineAmount</td>
                         <td>@fine.Status</td>
                         <td>
-                            <form action="Home/Edit" method="get">
+                            <form action="Edit" method="get">
                                 <input type="hidden" value="@fine.Id" name="id" />
                                 <input type="submit" value="Edit"/>
                             </form>
                         </td>
                         <td>
-                            <form action="Home/Delete" method="get">
+                            <form action="Delete" method="get">
                                 <input type="hidden" value="@fine.Id" name="id" />
                                 <input type="submit" value="Delete" />
                             </form>

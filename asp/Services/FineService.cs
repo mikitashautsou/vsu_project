@@ -8,8 +8,7 @@ using System.Collections.Generic;
 namespace Fines.Services
 {
     public class FineService
-    {
-        IGridFSBucket gridFS;   
+    {  
         IMongoCollection<Fine> fines;
 
         private string connectionString = "mongodb://localhost:27017";
@@ -19,7 +18,6 @@ namespace Fines.Services
             MongoClient client = new MongoClient(connectionString);
             IMongoDatabase database = client.GetDatabase("fines");
 
-            gridFS = new GridFSBucket(database);
             fines = database.GetCollection<Fine>("fines");
         }
 

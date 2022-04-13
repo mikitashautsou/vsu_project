@@ -8,20 +8,39 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 
+// TODO: Считывание чисел
+// TODO: Проверка аутентификации
+
 namespace Fines.Controllers
 {
 	public class HomeController : Controller
 	{
 		public FineService fineService = new FineService();
 
+		public ActionResult Auth()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public ActionResult Auth(User user)
+		{
+			if (CheckAuth(user))
+			{
+				return RedirectToAction(nameof(Index));
+			}
+
+			return View();
+		}
+
 		public async Task<ActionResult> Index()
 		{
 			List<Fine> fines = new List<Fine>();
-
 			fines = await fineService.GetAllFines();
+
 			ViewBag.Fines = fines;
 
-			return View();
+			return View("Index");
 		}
 
 		[HttpGet]
@@ -45,7 +64,7 @@ namespace Fines.Controllers
 			}
 			catch
 			{
-				return View();
+				return View("Index");
 			}
 		}
 
@@ -70,7 +89,7 @@ namespace Fines.Controllers
 			}
 			catch
 			{
-				return View();
+				return View("Index");
 			}
 		}
 
@@ -80,6 +99,16 @@ namespace Fines.Controllers
 			await fineService.Remove(id);
 
 			return RedirectToAction(nameof(Index));
+		}
+
+		private bool CheckAuth(User user)
+		{
+			if (user.Login == "an" && user.Password == "word")
+			{
+				return true;
+			}
+
+			return false;
 		}
 	}
 }
