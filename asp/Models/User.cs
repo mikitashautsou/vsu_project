@@ -9,27 +9,28 @@ namespace Fines.Models
 {
 	public class User
 	{
-		[BsonElement("login")]
-		public string Login { get; set; }
+		[BsonId]
+		public string Id { get; set; }
 
-		[BsonElement("password")]
-		public string Password { get; set; }
+		[BsonElement("username")]
+		public string UserName { get; set; }
 
-		public User()
-		{
+		[BsonElement("firstName")]
+		public string FirstName { get; set; }
 
-		}
+		[BsonElement("lastName")]
+		public string LastName { get; set; }
 
-		public User(User user)
-		{
-			Login = user.Login;
-			Password = user.Password;
-		}
+		[BsonElement("role")]
+		public Role Role { get; set; }
+	}
 
-		public User(string login, string password)
-		{
-			Login = login;
-			Password = password;
-		}
+	public enum Role
+	{
+		Regular,
+		Policeman,
+		Manager,
+		Accountant,
+		Admin
 	}
 }

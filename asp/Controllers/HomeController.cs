@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Bson;
+using System.Net;
+using System.IO;
 
 // TODO: Считывание чисел
 // TODO: Проверка аутентификации
@@ -15,7 +17,9 @@ namespace Fines.Controllers
 {
 	public class HomeController : Controller
 	{
-		public FineService fineService = new FineService();
+		private FineService fineService = new FineService();
+		private string token;
+		private User user;
 
 		public ActionResult Auth()
 		{
@@ -23,9 +27,11 @@ namespace Fines.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Auth(User user)
+		public ActionResult Auth(Creds creds)
 		{
-			if (CheckAuth(user))
+			string userData;
+
+			if (SignIn(creds, out userData))
 			{
 				return RedirectToAction(nameof(Index));
 			}
@@ -101,14 +107,48 @@ namespace Fines.Controllers
 			return RedirectToAction(nameof(Index));
 		}
 
-		private bool CheckAuth(User user)
+		private bool SignIn(Creds creds, out string userData)
 		{
-			if (user.Login == "an" && user.Password == "word")
+			WebRequest request = WebRequest.Create("http://localhost:4000/sign-in");
+			request.Method = "POST";
+			request.ContentType = "application/x-www-form-urlencoded";
+			request.Credentials = CredentialCache.DefaultCredentials;
+			
+			string data = creds.ToJson();
+			byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
+			request.ContentLength = bytes.Length;
+
+			using (Stream dataStream = request.GetRequestStream())
 			{
-				return true;
+				dataStream.Write(bytes, 0, bytes.Length);
+				dataStream.Close();
 			}
 
-			return false;
+			try
+			{
+				WebResponse response = request.GetResponse();
+
+				using (Stream stream = response.GetResponseStream())
+				{
+					using (StreamReader reader = new StreamReader(stream))
+					{
+						userData = reader.ReadToEnd();
+					}
+				}
+
+				response.Close();
+			}
+			catch
+			{
+				userData = string.Empty;
+			}
+
+			if (string.IsNullOrEmpty(userData))
+			{
+				return false;
+			}
+
+			return true;
 		}
 	}
 }
