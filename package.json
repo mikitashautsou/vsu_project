@@ -4,6 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "demo": "npm run install && npm run start",
+    "install": "npm run install:cars & npm run install:bank & npm run install:auth",
+    "install:auth": "npm run install:auth:backend &  npm run install:auth:frontend & npm run install:users:frontend",
+    "install:auth:backend": "cd auth/backend && npm install --force",
+    "install:auth:frontend": "cd authenticator && npm install --force",
+    "install:users:frontend": "cd auth/frontend && npm install --force",
+    "install:bank": "npm run install:bank:backend & npm run install:bank:frontend",
+    "install:bank:backend": "cd bank/backend && npm install --force",
+    "install:bank:frontend": "cd bank/frontend && npm install --force",
+    "install:cars": "npm run install:cars:backend & npm run install:cars:frontend",
+    "install:cars:backend": "cd cars/backend && npm install --force",
+    "install:cars:frontend": "cd cars/frontend && npm install --force",
+
+
     "start": "npm run start:cars & npm run start:bank & npm run start:auth",
     "start:auth": "npm run start:auth:backend &  npm run start:auth:frontend & npm run start:users:frontend",
     "start:auth:backend": "cd auth/backend && npm run start",
