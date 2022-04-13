@@ -20,8 +20,8 @@ export const ButtonAdd = styled(Button)`
 
 export const ActionButton = styled.button`
   font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
+  margin: 0.5em;
+  padding: 0.25em 0.25em;
   border-radius: 3px;
   background-color: white;
 `;
