@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { RegisterPage } from './signUpPage/RegisterPage';
 import { LoginPage } from './signInPage/LoginPage';
@@ -10,12 +10,14 @@ import { AddUserPage } from './addUserPage/AddUserPage';
 import { EditUserPage } from './editUserPage.js/EditUserPage';
 import { deleteMessage as deleteAuthMessage } from '../core/reducers/authReducer';
 import { deleteMessage as deleteUsersMessage } from '../core/reducers/usersReducer';
+import { HomePage } from './homePage/HomePage';
 
 export const REGISTER_ROUTE = '/';
 export const LOGIN_ROUTE = '/login';
 export const USERS_ROUTE = '/users';
 export const ADD_USER_ROUTE = '/users/add';
 export const EDIT_USER_ROUTE = '/users/edit';
+export const HOME_ROUTE = '/home';
 
 const ANY_ROUTE = '*';
 
@@ -26,43 +28,44 @@ const publicRoutes = [
 ];
 
 const privateRoutes = [
+  { path: HOME_ROUTE, component: <HomePage /> },
   { path: EDIT_USER_ROUTE, component: <EditUserPage /> },
   { path: ADD_USER_ROUTE, component: <AddUserPage /> },
   { path: USERS_ROUTE, component: <UsersPage /> },
-  { path: ANY_ROUTE, component: <Navigate to={USERS_ROUTE} /> },
+  { path: ANY_ROUTE, component: <Navigate to={HOME_ROUTE} /> },
 ];
 
-const ERROR_STATUS = 'error'
-const OK_STATUS = 'ok'
+const ERROR_STATUS = 'error';
+const OK_STATUS = 'ok';
 
-toast.configure()
+toast.configure();
 export const AppRoutes = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const {status: authStatus, message:authMessage} = useSelector(state=>state.auth)
-  const {status: usersStatus, message:usersMessage} = useSelector(state=>state.users)
-  
-  useEffect(()=>{
-    if(authStatus === ERROR_STATUS && authMessage){
-      toast.error(authMessage, { position: toast.POSITION.BOTTOM_RIGHT })
-      dispatch(deleteAuthMessage())
+  const { status: authStatus, message: authMessage } = useSelector((state) => state.auth);
+  const { status: usersStatus, message: usersMessage } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (authStatus === ERROR_STATUS && authMessage) {
+      toast.error(authMessage, { position: toast.POSITION.BOTTOM_RIGHT });
+      dispatch(deleteAuthMessage());
     }
 
-    if(usersStatus === ERROR_STATUS && usersMessage){
-      toast.error(usersMessage, { position: toast.POSITION.BOTTOM_RIGHT })
-      dispatch(deleteUsersMessage())
+    if (usersStatus === ERROR_STATUS && usersMessage) {
+      toast.error(usersMessage, { position: toast.POSITION.BOTTOM_RIGHT });
+      dispatch(deleteUsersMessage());
     }
 
-    if(authStatus === OK_STATUS && authMessage){
-      toast.success(authMessage, { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 3000 })
-      dispatch(deleteAuthMessage())
+    if (authStatus === OK_STATUS && authMessage) {
+      toast.success(authMessage, { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 3000 });
+      dispatch(deleteAuthMessage());
     }
 
-    if(usersStatus === OK_STATUS && usersMessage){
-      toast.success(usersMessage, { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 3000 })
-      dispatch(deleteUsersMessage())
+    if (usersStatus === OK_STATUS && usersMessage) {
+      toast.success(usersMessage, { position: toast.POSITION.BOTTOM_RIGHT, autoClose: 3000 });
+      dispatch(deleteUsersMessage());
     }
-  })
+  });
 
   const token = useSelector((state) => state.auth.token);
 
