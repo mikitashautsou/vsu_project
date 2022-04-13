@@ -7,14 +7,17 @@ namespace Fines.Models
 {
 	public class Fine
 	{
-		[BsonRepresentation(BsonType.ObjectId)]
+		[BsonId]
 		public string Id { get; set; }
-		[Display(Name = "Description")]
+
+		[BsonElement("description")]
 		public string Description { get; set; }
-		[Display(Name = "Fine Amount")]
+
+		[BsonElement("fine_amount")]
 		public double FineAmount { get; set; }
-		[Display(Name = "Status")]
-		public Status Status { get; set; }
+
+		[BsonElement("status")]
+		public bool Status { get; set; }
 
 		public Fine()
 		{
@@ -30,12 +33,12 @@ namespace Fines.Models
 		}
 
 		public Fine(string id, string description,
-			int fineAmount, bool status)
+			double fineAmount, bool status)
 		{
-			Id = id.ToString();
+			Id = id;
 			Description = description;
 			FineAmount = fineAmount;
-			Status = status ? Status.Paid : Status.NotPaid;
+			Status = status;
 		}
 	}
 

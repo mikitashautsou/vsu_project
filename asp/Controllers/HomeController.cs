@@ -6,16 +6,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 
 namespace Fines.Controllers
 {
 	public class HomeController : Controller
 	{
-		public FineService fineService = new FineService("mongodb://127.0.0.1:27017");
+		public FineService fineService = new FineService();
 
-		public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
-			ViewBag.Fines = fineService.GetAllFines();
+			List<Fine> fines = new List<Fine>();
+
+			fines = await fineService.GetAllFines();
+			ViewBag.Fines = fines;
 
 			return View();
 		}
@@ -27,12 +31,13 @@ namespace Fines.Controllers
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> CreateAsync(Fine fine)
+		public async Task<ActionResult> Create(Fine fine)
 		{
 			Fine f = new Fine(fine);
+			f.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+			
 
-			await fineService.Create(fine);
+			await fineService.Create(f);
 
 			try
 			{
@@ -45,16 +50,19 @@ namespace Fines.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Edit(int id)
+		public async Task<ActionResult> Edit(string id)
 		{
+			ViewBag.EditFine = await fineService.GetFine(id);
+
 			return View("Edit");
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Edit(Fine fine)
+		public async Task<ActionResult> Edit(Fine fine)
 		{
-			
+			Fine f = new Fine(fine);
+
+			await fineService.Update(f);
 
 			try
 			{
@@ -67,24 +75,11 @@ namespace Fines.Controllers
 		}
 
 		[HttpGet]
-		public ActionResult Delete(int id)
+		public async Task<ActionResult> Delete(string id)
 		{
-			fines.RemoveAt(id);
-			return View();
-		}
+			await fineService.Remove(id);
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
+			return RedirectToAction(nameof(Index));
 		}
 	}
 }

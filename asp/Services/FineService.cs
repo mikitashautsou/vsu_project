@@ -10,27 +10,40 @@ namespace Fines.Services
     public class FineService
     {
         IGridFSBucket gridFS;   
-        IMongoCollection<Fine> fines; 
+        IMongoCollection<Fine> fines;
 
-        public FineService(string connectionString = "mongodb://127.0.0.1:27017")
+        private string connectionString = "mongodb://localhost:27017";
+
+        public FineService()
         {
-            var connection = new MongoUrlBuilder(connectionString);
-
             MongoClient client = new MongoClient(connectionString);
-            IMongoDatabase database = client.GetDatabase(connection.DatabaseName);
+            IMongoDatabase database = client.GetDatabase("fines");
 
             gridFS = new GridFSBucket(database);
-            fines = database.GetCollection<Fine>("Fines");
+            fines = database.GetCollection<Fine>("fines");
         }
 
-        public IMongoCollection<Fine> GetAllFines()
+        public async Task<List<Fine>> GetAllFines()
         {
-            return fines;
+            List<Fine> f = new List<Fine>();
+            var filter = new BsonDocument();
+
+            using (var cursor = await fines.FindAsync(filter))
+            {
+                while (await cursor.MoveNextAsync())
+                {
+                    var fines = cursor.Current;
+
+                    f = new List<Fine>(fines);
+                }
+            }
+
+            return f;
         }
 
         public async Task<Fine> GetFine(string id)
         {
-            return await fines.Find(new BsonDocument("_id", new ObjectId(id))).FirstOrDefaultAsync();
+            return await fines.Find(new BsonDocument("_id", id)).FirstOrDefaultAsync();
         }
 
 		public async Task Create(Fine fine)
@@ -40,12 +53,12 @@ namespace Fines.Services
 
         public async Task Update(Fine fine)
         {
-            await fines.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(fine.Id)), fine);
+            await fines.ReplaceOneAsync(new BsonDocument("_id", fine.Id), fine);
         }
 
         public async Task Remove(string id)
         {
-            await fines.DeleteOneAsync(new BsonDocument("_id", new ObjectId(id)));
+            await fines.DeleteOneAsync(new BsonDocument("_id", id));
         }
     }
 }

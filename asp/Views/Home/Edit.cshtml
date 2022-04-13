@@ -9,15 +9,15 @@
             Edit
         </h1>
         <form method="post">
-            <p>Id</p>
-            <input type="number" name="id" />
+            <input type="hidden" name="id" value="@ViewBag.EditFine.Id" />
             <p>Description</p>
-            <input type="text" name="description" />
+            <input type="text" name="description" value="@ViewBag.EditFIne.Description" />
             <p>Fine amount</p>
-            <input type="number" name="fineAmount" />
+            <input type="number" name="fine_amount" value="@ViewBag.EditFine.FineAmount" />
             <p>Status</p>
-            <input type="checkbox" name="status" />
-            <input type="submit" value="Save" />
+            <input type="checkbox" name="status" value="@ViewBag.EditFine.Status" />
+            <br />
+            <input type="submit"/>
         </form>
     </body>
 </cshtml>

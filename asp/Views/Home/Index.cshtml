@@ -13,7 +13,6 @@
         </a>    
         <table border="1">
             <tr>
-                <th>Id</th>
                 <th>Description</th>
                 <th>Fine amount</th>
                 <th>Status</th>
@@ -22,19 +21,18 @@
                 foreach (var fine in ViewBag.Fines)
                 {
                     <tr>
-                        <td>@fine.UserId</td>
                         <td>@fine.Description</td>
                         <td>@fine.FineAmount</td>
                         <td>@fine.Status</td>
                         <td>
-                            <form method="get">
-                                <input type="hidden" value="@fine.UserId" name="id" />
+                            <form action="Home/Edit" method="get">
+                                <input type="hidden" value="@fine.Id" name="id" />
                                 <input type="submit" value="Edit"/>
                             </form>
                         </td>
                         <td>
-                            <form method="get">
-                                <input type="hidden" value="@fine.UserId" name="id" />
+                            <form action="Home/Delete" method="get">
+                                <input type="hidden" value="@fine.Id" name="id" />
                                 <input type="submit" value="Delete" />
                             </form>
                         </td>
