@@ -10,6 +10,13 @@ import { BuyCarPage } from "./pages/sales/buy";
 import SalesPage from "./pages/sales/list";
 import { StateContextProvider } from "./state/state.context";
 
+import "react-toastify/dist/ReactToastify.css";
+
+import { toast } from "react-toastify";
+
+toast.configure();
+
+
 const Router = () => {
   return (
     <div>
@@ -36,7 +43,7 @@ const Router = () => {
         <Routes>
           <Route path="/sales" element={<SalesPage />} />
           <Route path="/sales/:saleId" element={<BuyCarPage />} />
-          
+
           <Route path="/cars" element={<CarsPage />} />
           <Route path="/poas" element={<PoasPage />} />
           <Route path="/poas/:poaId" element={<PoaEditPage />} />

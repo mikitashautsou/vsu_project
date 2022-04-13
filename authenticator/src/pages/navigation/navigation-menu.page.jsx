@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { StateContext } from "../../state/state.context";
@@ -80,6 +81,8 @@ const NavigationMenuPage = ({ services }) => {
 
   return (
     <Container>
+      <Confetti></Confetti>
+
       {services
         .filter((s) => !s.visibleFor || s.visibleFor.includes(state.user.role))
         .map((s) => (
