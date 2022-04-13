@@ -5,12 +5,11 @@ import { requirePermissionAtLeast } from "../../common/permissions.js";
 export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
-  requiredFields: ["targetUserId", "carId"],
+  requiredFields: ["fromUserId", "targetUserId", "carId"],
   funcBody: async ({
     db,
     user,
-    params: { userId },
-    body: { targetUserId, carId },
+    body: { targetUserId, carId, fromUserId },
   }) => {
     const car = await db.collection("cars").findOne({
       _id: new ObjectId(carId),
@@ -19,12 +18,12 @@ export default createFunc({
       throw new Error("Car was not found");
     }
 
-    if (car.ownerId !== userId) {
+    if (car.ownerId !== fromUserId) {
       requirePermissionAtLeast(user.role, "manager");
     }
 
     await db.collection("poas").insertOne({
-      fromUserId: userId,
+      fromUserId,
       carId,
       targetUserId,
     });

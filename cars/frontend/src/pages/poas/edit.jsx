@@ -10,21 +10,21 @@ import { patch } from "../../api/patch";
 import { useNavigate } from "react-router-dom";
 import { post } from "../../api/post";
 
-const CarEditPage = () => {
-  const { carId } = useParams();
+const PoaEditPage = () => {
+  const { poaId } = useParams();
   const navigate = useNavigate();
   const { token } = useContext(StateContext);
 
-  const [car, setCar] = useState({});
+  const [poa, setPoa] = useState({});
   useAsyncEffect(async () => {
-    if (carId === "new") {
+    if (poaId === "new") {
       return;
     }
-    const { response: car } = await get({
-      url: `/cars/${carId}`,
+    const { response: poa } = await get({
+      url: `/poas/${poaId}`,
       token,
     });
-    setCar(car);
+    setPoa(poa);
   });
 
   const [users, setUsers] = useState([]);
@@ -37,52 +37,62 @@ const CarEditPage = () => {
     setUsers(users);
   });
 
+  const [cars, setCars] = useState([]);
+  useAsyncEffect(async () => {
+    const { response: cars } = await get({
+      url: `/cars/`,
+      token,
+    });
+    setCars(cars);
+  });
+
   return (
     <Form
-      entity={car}
-      title={carId === "new" ? "Create a car" : "Edit car"}
+      entity={poa}
+      title={
+        poaId === "new" ? "Create Power of Attorney" : "Edit Power of Attorney"
+      }
       properties={[
         {
-          key: "model",
-          type: "text",
-          title: "Model",
-        },
-        {
-          key: "ownerId",
+          key: "fromUserId",
           type: "select",
-          title: "Owner",
+          title: "From user",
           options: users.map((u) => ({
             title: u.username,
             value: u._id,
           })),
         },
         {
-          key: "state",
+          key: "targetUserId",
           type: "select",
-          title: "State",
-          options: [
-            {
-              title: "new",
-              value: "NEW",
-            },
-            {
-              title: "Stolen",
-              value: "STOLEN",
-            },
-          ],
+          title: "Target User",
+          options: users.map((u) => ({
+            title: u.username,
+            value: u._id,
+          })),
+        },
+        {
+          key: "carId",
+          type: "select",
+          title: "Car",
+          options: cars.map((u) => ({
+            title: u.model,
+            value: u._id,
+          })),
         },
       ]}
       onSubmit={async (model) => {
+        console.log("saving...", model);
         if (model._id) {
-          await patch({ url: `/cars/${model._id}`, token, body: model });
+          await patch({ url: `/poas/${model._id}`, token, body: model });
         } else {
-          await post({ url: `/cars`, token, body: model });
+          await post({ url: `/poas`, token, body: model });
         }
-        navigate("/cars");
+        navigate("/poas");
       }}
-      cancelRoute={"/cars"}
+      cancelRoute={"/poas"}
     />
   );
 };
 
-export default CarEditPage;
+export default PoaEditPage;
