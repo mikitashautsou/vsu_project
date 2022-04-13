@@ -1,12 +1,17 @@
-import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { AppRoutes } from './pages/AppRoutes';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { StateContextProvider } from "./state/state.context";
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes />
-    </BrowserRouter>
+    <StateContextProvider>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/authenticate">
+
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </StateContextProvider>
   );
 }
 

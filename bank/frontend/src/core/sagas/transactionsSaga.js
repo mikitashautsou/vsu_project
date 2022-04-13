@@ -30,7 +30,7 @@ function* getTransactionWorker({ payload }) {
 
     const response = yield call(() =>
       fetch(
-        process.env.REACT_APP_BACKEND_URL +
+        'http://localhost:4001' +
           `/users/${userId}/accounts/${accountId}/transactions/${transactionId}`,
         {
           headers: {
@@ -58,14 +58,15 @@ function* transferWorker({ payload }) {
     const body = { destinationAccountId, amount: Number(amount) };
 
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${userId}/accounts/${accountId}/transfer`, {
+      fetch('http://localhost:4001' + `/users/${userId}/accounts/${accountId}/transfer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           authorization: token,
         },
         body: JSON.stringify(body),
-      }).then((response) => response.json())
+      })
+        .then((response) => response.json())
     );
     yield put(transferSuccess(response));
   } catch ({ status, message }) {

@@ -13,7 +13,7 @@ function* createAccountWorker({ payload }) {
   try {
     const { token, _id } = payload;
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${_id}/accounts`, {
+      fetch('http://localhost:4001' + `/users/${_id}/accounts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ function* createAccountWorker({ payload }) {
 function* getAllAccountsWorker({ payload }) {
   try {
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + '/accounts', {
+      fetch('http://localhost:4001' + '/accounts', {
         headers: {
           'Content-Type': 'application/json',
           authorization: payload,
@@ -47,7 +47,7 @@ function* getUserAccountsWorker({ payload }) {
   try {
     const { _id, token } = payload;
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${_id}/accounts`, {
+      fetch('http://localhost:4001' + `/users/${_id}/accounts`, {
         headers: {
           'Content-Type': 'application/json',
           authorization: token,
@@ -64,7 +64,7 @@ function* updateAccountWorker({ payload }) {
   try {
     const { token, userId, accountId, balance } = payload;
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${userId}/accounts/${accountId}`, {
+      fetch('http://localhost:4001' + `/users/${userId}/accounts/${accountId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function* depositWorker({ payload }) {
   try {
     const { token, userId, accountId, amount } = payload;
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${userId}/accounts/${accountId}/deposit`, {
+      fetch('http://localhost:4001' + `/users/${userId}/accounts/${accountId}/deposit`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ function* deleteAccountWorker({ payload }) {
   try {
     const { token, userId, accountId } = payload;
     const response = yield call(() =>
-      fetch(process.env.REACT_APP_BACKEND_URL + `/users/${userId}/accounts/${accountId}`, {
+      fetch('http://localhost:4001' + `/users/${userId}/accounts/${accountId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 export const DB_NAME = "drivers";
 // export const JWT_SECRET = "2022";
-export const SERVER_PORT = 4003;
+export const SERVER_PORT = 4020;
 // export const DB_HOST = "mongodb://127.0.0.1:27017";
 export const BANK_SERVICE_URL = "http://127.0.0.1:4001";
 // export const DRIVER_SERVICE_BANK_TOKEN =
