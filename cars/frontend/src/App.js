@@ -1,40 +1,38 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import SetToken from "./pages/auth/set-token";
 import CarEditPage from "./pages/cars/edit";
 import CarsPage from "./pages/cars/list";
+import PoaEditPage from "./pages/poas/edit";
+import PoasPage from "./pages/poas/list";
 import { StateContextProvider } from "./state/state.context";
-// auth
-//   auth-backend: 4000
-//   authenticator-frontend: 4001
-//   users-frontend: 4002
-// bank:
-//   backend: 4010
-//   frontend: 4011
-// drivers:
-//   backend: 4020
-//   frontend: 4021
-// cars:
-//   backend: 4030
-//   frontend: 4031
-// fines:
-//   backend: 4040
-//   frontend: 4041
 
 const Router = () => {
   return (
     <div>
-      <div>
-        <button
-          onClick={() => {
-            window.location.href = process.env.REACT_APP_FRONTEND_AUTH_URL;
-          }}
-        >
-          Main menu
-        </button>
-      </div>
       <BrowserRouter>
+        <div>
+          <button
+            onClick={() => {
+              window.location.href = process.env.REACT_APP_FRONTEND_AUTH_URL;
+            }}
+          >
+            Main menu
+          </button>
+          <button>
+            <Link to="/cars">Cars</Link>
+          </button>
+          <button>
+            <Link to="/sales">Sales</Link>
+          </button>
+
+          <button>
+            <Link to="/poas">Power of attorneys</Link>
+          </button>
+        </div>
         <Routes>
           <Route path="/cars" element={<CarsPage />} />
+          <Route path="/poas" element={<PoasPage />} />
+          <Route path="/poas/:poaId" element={<PoaEditPage />} />
           <Route path="/cars/:carId" element={<CarEditPage />} />
           <Route path="/set-token/:token" element={<SetToken />} />
           {/* <Route path="/sign-up" element={<SignUpPage />} />

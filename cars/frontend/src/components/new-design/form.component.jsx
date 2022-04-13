@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Input = ({
   type = "text",
@@ -52,8 +52,10 @@ const Form = ({
   entity = {},
   properties = [],
   title = "OOPS",
+  cancelRoute,
   onSubmit: handleSubmit,
 }) => {
+  const navigate = useNavigate();
   const [state, setState] = useState({});
 
   const handleChange = (event) => {
@@ -92,11 +94,18 @@ const Form = ({
 
       <button
         onClick={(e) => {
-          console.log("submit state", state);
+            e.preventDefault()
           handleSubmit(state);
         }}
       >
         Submit
+      </button>
+      <button
+        onClick={(e) => {
+          navigate(cancelRoute);
+        }}
+      >
+        Cancel
       </button>
     </form>
   );

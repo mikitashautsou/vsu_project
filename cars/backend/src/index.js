@@ -49,11 +49,11 @@ app.post("/users/:userId/cars/:carNo/taxes", payTax);
 // app.patch("/cars/:carNo/poa/:poaId", updatePoa);
 // app.delete("/cars/:carNo/poa/:poaId", deletePoa);
 
-app.post("/users/:userId/poas", createPoa);
-app.get("/users/:userId/poas", getPoas);
-app.get("/users/:userId/poas/:poaId", getPoa);
-app.patch("/users/:userId/poas/:poaId", updatePoa);
-app.delete("/users/:userId/poas/:poaId", deletePoa);
+app.post("/poas", createPoa);
+app.get("/poas", getPoas);
+app.get("/poas/:poaId", getPoa);
+app.patch("/poas/:poaId", updatePoa);
+app.delete("/poas/:poaId", deletePoa);
 // app.get("/cars", getCars);
 // app.post("/cars/:carNo/taxes", payTax);
 // app.post("/cars/:carNo/taxes/verify", verifyTaxPayment);

@@ -6,7 +6,7 @@ export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
   requiredFields: [],
-  funcBody: async ({ db, user, params: { userId, poaId }, body }) => {
+  funcBody: async ({ db, user, params: { poaId }, body }) => {
     if (body.carId) {
       const car = await db.collection("cars").findOne({
         _id: new ObjectId(body.carId),
@@ -15,7 +15,7 @@ export default createFunc({
         throw new Error("Car was not found");
       }
 
-      if (car.ownerId !== userId) {
+      if (car.ownerId !== user._id) {
         requirePermissionAtLeast(user.role, "manager");
       }
     }

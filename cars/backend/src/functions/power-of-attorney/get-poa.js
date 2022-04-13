@@ -6,8 +6,11 @@ export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
   requiredFields: [],
-  funcBody: async ({ user, db, params: { userId, poaId } }) => {
-    if (user._id !== userId) {
+  funcBody: async ({ user, db, params: { poaId } }) => {
+    const poa = await db.collection("poas").findOne({
+      _id: new ObjectId(poaId),
+    });
+    if (user._id !== poa.targetUserId && user._id !== poa.fromUserId) {
       requirePermissionAtLeast(user.role, "policeman");
     }
     return await db.collection("poas").findOne({

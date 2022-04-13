@@ -6,7 +6,7 @@ export default createFunc({
   isUserNeeded: true,
   isDbNeeded: true,
   requiredFields: [],
-  funcBody: async ({ db, user, params: { userId, poaId }, body }) => {
+  funcBody: async ({ db, user, params: {poaId }, body }) => {
     const poa = await db.collection("poas").findOne({
       _id: new ObjectId(poaId),
     });
