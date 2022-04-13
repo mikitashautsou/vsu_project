@@ -22,12 +22,22 @@ import { StateContextProvider } from "./state/state.context";
 
 const Router = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/cars" element={<CarsPage />} />
-        <Route path="/cars/:carId" element={<CarEditPage />} />
-        <Route path="/" element={<SetToken />} />
-        {/* <Route path="/sign-up" element={<SignUpPage />} />
+    <div>
+      <div>
+        <button
+          onClick={() => {
+            window.location.href = process.env.REACT_APP_FRONTEND_AUTH_URL;
+          }}
+        >
+          Main menu
+        </button>
+      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/cars" element={<CarsPage />} />
+          <Route path="/cars/:carId" element={<CarEditPage />} />
+          <Route path="/set-token/:token" element={<SetToken />} />
+          {/* <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route
           path="/menu"
@@ -59,8 +69,9 @@ const Router = () => {
             )
           }
         />*/}
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 function App() {
