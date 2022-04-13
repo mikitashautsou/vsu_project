@@ -4,6 +4,10 @@ import { SignInPage } from "./pages/auth/sign-in.page";
 import { SignUpPage } from "./pages/auth/sign-up.page";
 import NavigationMenuPage from "./pages/navigation/navigation-menu.page";
 import { StateContext, StateContextProvider } from "./state/state.context";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+toast.configure();
 // auth
 //   auth-backend: 4000
 //   authenticator-frontend: 4001
