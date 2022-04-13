@@ -15,7 +15,10 @@
             <p>Fine amount</p>
             <input type="number" name="fine_amount" value="@ViewBag.EditFine.FineAmount" />
             <p>Status</p>
-            <input type="checkbox" name="status" value="@ViewBag.EditFine.Status" />
+            <select name="status">
+                <option value="Paid">Paid</option>
+                <option value="NotPaid">Not Paid</option>
+            </select>
             <br />
             <input type="submit"/>
         </form>

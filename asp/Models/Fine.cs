@@ -17,7 +17,7 @@ namespace Fines.Models
 		public double FineAmount { get; set; }
 
 		[BsonElement("status")]
-		public bool Status { get; set; }
+		public Status Status { get; set; }
 
 		public Fine()
 		{
@@ -33,7 +33,7 @@ namespace Fines.Models
 		}
 
 		public Fine(string id, string description,
-			double fineAmount, bool status)
+			double fineAmount, Status status)
 		{
 			Id = id;
 			Description = description;
