@@ -12,7 +12,7 @@ export default createFunc({
   isDbNeeded: true,
   isUserNeeded: true,
   funcBody: async ({
-    params: { carNo, userId },
+    params: { carNo },
     db,
     user,
     _req,
@@ -22,7 +22,7 @@ export default createFunc({
       _id: new ObjectId(carNo),
     });
 
-    if (userId !== user._id) {
+    if (car.ownerId !== user._id) {
       requirePermissionAtLeast(user.role, "policeman");
     }
     if (!car) {
@@ -36,12 +36,15 @@ export default createFunc({
     if (car.state !== CAR_STATE.NEW) {
       throw new Error("Tax already paid");
     }
+    console.log("paying...");
+
     const {
       token,
       user: { _id },
     } = await getDriverServiceBankUser();
     const toAccountId = await getDriverServiceAccountId();
 
+    console.log({ toAccountId });
     const { status } = await post({
       url: `${BANK_SERVICE_URL}/users/${payerId}/accounts/${payerAccountId}/transfer`,
       headers: {
@@ -53,10 +56,15 @@ export default createFunc({
         description: "Car Tax Payment",
       },
     });
+    console.log({ status });
+
+    console.log("here");
 
     if (status !== "ok") {
       throw new Error("Payment was not successful");
     }
+
+    console.log("here2");
 
     await db.collection("cars").updateOne(
       {

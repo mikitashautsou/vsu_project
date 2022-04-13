@@ -2,8 +2,12 @@ import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import SetToken from "./pages/auth/set-token";
 import CarEditPage from "./pages/cars/edit";
 import CarsPage from "./pages/cars/list";
+import { TaxPaymentPage } from "./pages/cars/pay-taxes";
+import { SellCarPage } from "./pages/cars/sell";
 import PoaEditPage from "./pages/poas/edit";
 import PoasPage from "./pages/poas/list";
+import { BuyCarPage } from "./pages/sales/buy";
+import SalesPage from "./pages/sales/list";
 import { StateContextProvider } from "./state/state.context";
 
 const Router = () => {
@@ -30,9 +34,14 @@ const Router = () => {
           </button>
         </div>
         <Routes>
+          <Route path="/sales" element={<SalesPage />} />
+          <Route path="/sales/:saleId" element={<BuyCarPage />} />
+          
           <Route path="/cars" element={<CarsPage />} />
           <Route path="/poas" element={<PoasPage />} />
           <Route path="/poas/:poaId" element={<PoaEditPage />} />
+          <Route path="/cars/:carId/sell" element={<SellCarPage />} />
+          <Route path="/cars/:carId/pay-tax" element={<TaxPaymentPage />} />
           <Route path="/cars/:carId" element={<CarEditPage />} />
           <Route path="/set-token/:token" element={<SetToken />} />
           {/* <Route path="/sign-up" element={<SignUpPage />} />

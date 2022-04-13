@@ -80,9 +80,16 @@ const NavigationMenuPage = ({ services }) => {
 
   return (
     <Container>
-      {services.map((s) => (
-        <MenuItem key={s.key} name={s.name} token={state.token} path={s.path} />
-      ))}
+      {services
+        .filter((s) => !s.visibleFor || s.visibleFor.includes(state.user.role))
+        .map((s) => (
+          <MenuItem
+            key={s.key}
+            name={s.name}
+            token={state.token}
+            path={s.path}
+          />
+        ))}
       <MenuItemElement key={"exit"} onClick={() => state.logout()}>
         {"Logout"}
       </MenuItemElement>

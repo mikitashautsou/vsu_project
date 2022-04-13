@@ -13,7 +13,10 @@ import { post } from "../../api/post";
 const PoaEditPage = () => {
   const { poaId } = useParams();
   const navigate = useNavigate();
-  const { token } = useContext(StateContext);
+  const {
+    token,
+    user: { role, _id },
+  } = useContext(StateContext);
 
   const [poa, setPoa] = useState({});
   useAsyncEffect(async () => {
@@ -46,6 +49,15 @@ const PoaEditPage = () => {
     setCars(cars);
   });
 
+  console.log(
+    "hhhheras",
+    users.filter(
+      (u) =>
+        (role !== "regular" && role !== "policeman" && role !== "accountant") ||
+        u._id === _id
+    )
+  );
+
   return (
     <Form
       entity={poa}
@@ -57,10 +69,18 @@ const PoaEditPage = () => {
           key: "fromUserId",
           type: "select",
           title: "From user",
-          options: users.map((u) => ({
-            title: u.username,
-            value: u._id,
-          })),
+          options: users
+            .filter(
+              (u) =>
+                (role !== "regular" &&
+                  role !== "policeman" &&
+                  role !== "accountant") ||
+                u._id === _id
+            )
+            .map((u) => ({
+              title: u.username,
+              value: u._id,
+            })),
         },
         {
           key: "targetUserId",

@@ -5,15 +5,28 @@ export default createHandler({
   requiredFields: [],
   isUserNeeded: true,
   isDbNeeded: true,
-  funcBody: async ({ user, db, params: { userId } }) => {
-    if (user._id !== userId) {
-      requirePermissions(user.role, ["admin", "accountant"]);
+  funcBody: async ({ db, params: { userId }, user }) => {
+    let roleLimitationFilter;
+    if (user.role === "regular" || user.role === "policeman") {
+      roleLimitationFilter = {
+        userId: user._id,
+      };
     }
-    return await db
-      .collection("accounts")
-      .find({
-        userId,
-      })
-      .toArray();
+    if (userId) {
+      return await db
+        .collection("accounts")
+        .find({
+          userId,
+          ...roleLimitationFilter,
+        })
+        .toArray();
+    } else {
+      return await db
+        .collection("accounts")
+        .find({
+          ...roleLimitationFilter,
+        })
+        .toArray();
+    }
   },
 });

@@ -40,22 +40,31 @@ const Router = () => {
             state.user ? (
               <NavigationMenuPage
                 services={[
-                  { name: "Bank", key: "bank", path: "http://localhost:4011/" },
+                  {
+                    name: "Bank",
+                    key: "bank",
+                    path: "http://localhost:4011/",
+
+                    visibleFor: ["regular", "manager", "policeman", "admin"],
+                  },
                   {
                     name: "Users",
                     key: "user",
                     path: "http://localhost:4002/",
+                    visibleFor: ["manager", "policeman", "admin"],
                   },
                   {
                     name: "Drivers",
                     key: "drivers",
                     path: "http://localhost:4021/",
+                    visibleFor: ["regular", "manager", "policeman", "admin"],
                   },
                   { name: "Cars", key: "cars", path: "http://localhost:4031/" },
                   {
                     name: "Fines(Unity)",
                     key: "fines",
                     path: "http://localhost:4041/",
+                    visibleFor: ["regular", "manager", "policeman", "admin"],
                   },
                 ]}
               />

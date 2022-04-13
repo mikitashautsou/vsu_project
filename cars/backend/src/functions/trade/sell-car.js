@@ -19,14 +19,14 @@ export default createFunc({
   funcBody: async ({
     user,
     db,
-    params: { userId, carNo },
+    params: { carNo },
     body: { destinationAccountId, price },
   }) => {
     const car = await db.collection("cars").findOne({
       _id: new ObjectId(carNo),
     });
 
-    if (userId !== user._id || userId !== car.ownerId) {
+    if (car.ownerId !== user._id) {
       requirePermissionAtLeast(user.role, "policeman");
     }
 
@@ -39,7 +39,7 @@ export default createFunc({
       state: SALE_STATE.NEW,
       price,
       destinationAccountId,
-      ownerId: userId,
+      ownerId: user._id,
     });
 
     await db.collection("cars").updateOne(

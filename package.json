@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:auth": "npm run start:auth:backend &  npm run start:auth:frontend",
+    "start": "npm run start:cars & npm run start:bank & npm run start:auth",
+    "start:auth": "npm run start:auth:backend &  npm run start:auth:frontend & npm run start:users:frontend",
     "start:auth:backend": "cd auth/backend && npm run start",
     "start:auth:frontend": "cd authenticator && npm run start",
+    "start:users:frontend": "cd auth/frontend && npm run start",
     "start:bank": "npm run start:bank:backend & npm run start:bank:frontend",
     "start:bank:backend": "cd bank/backend && npm run start",
-    "start:bank:frontend": "cd bank/frontend && npm run start"
+    "start:bank:frontend": "cd bank/frontend && npm run start",
+    "start:cars": "npm run start:cars:backend & npm run start:cars:frontend",
+    "start:cars:backend": "cd cars/backend && npm run start",
+    "start:cars:frontend": "cd cars/frontend && npm run start"
   },
   "repository": {
     "type": "git",

@@ -41,6 +41,7 @@ app.get(
 
 // app.post("/transfer", transfer);
 
+app.get("/accounts", getAccounts);
 app.put("/users/:userId/accounts/:accountId/deposit", deposit);
 app.post("/users/:userId/accounts/:accountId/request", createRequest);
 app.post(
