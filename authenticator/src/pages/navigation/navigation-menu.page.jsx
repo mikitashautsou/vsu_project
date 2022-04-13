@@ -63,7 +63,7 @@ const MenuItem = ({ key, path, token, name }) => {
       key={key}
       style={STYLES[status]}
       onClick={() => {
-        window.location.href = `${path}?token=${token}`;
+        window.location.href = `${path}set-token/${token}`;
       }}
     >
       {name}
